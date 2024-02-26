@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<materialLib name="TerrainGen">
+  <textures>
+    <!-- Noise texture: 16 bit float -->
+    <texture name="NoiseTex">
+      <WIDTH value="1024"/>
+      <HEIGHT value="1024"/>
+      <INTERNAL_FORMAT value="RGBA16F"/>
+      <MIPMAP value="true"/>
+    </texture>
+    
+    <cubeMap name="Skybox"
+             filePosX="textures/skybox/px.png"
+             fileNegX="textures/skybox/nx.png"
+             filePosY="textures/skybox/py.png"
+             fileNegY="textures/skybox/ny.png"
+             filePosZ="textures/skybox/pz.png"
+             fileNegZ="textures/skybox/nz.png"
+    />
+  </textures>
+
+  <shaders>
+    <shader name="GenNoise" cs="shaders/compute/GenNoise.comp"/>
+    <shader name="Planet" vs="shaders/planet/Planet.vert" ps="shaders/planet/Planet.frag"/>
+    <shader name="Skybox" vs="shaders/skybox/Skybox.vert" ps="shaders/skybox/Skybox.frag"/>
+  </shaders>
+
+  <states>
+    <state name="Skybox">
+      <CULL_TYPE value="FRONT"/>
+      <DEPTH_MASK value="false"/>
+    </state>
+  </states>
+
+  <materials>
+    <material name="Skybox">
+      <shader name="Skybox">
+        <values>
+          <valueof uniform   = "CUBEMAP"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "0"
+                   component = "UNIT"
+          />
+          <valueof uniform   = "PVM"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "PROJECTION_VIEW_MODEL"
+          />
+          <valueof uniform   = "CAM_POS"
+                   type      = "CAMERA"
+                   context   = "MainCamera"
+                   component = "POSITION"
+          />
+        </values>
+      </shader>
+      <textures>
+        <texture UNIT="0" name="Skybox"/>
+      </textures>
+      <state name="Skybox"/>
+    </material>
+
+    <material name="GenNoise">
+      <shader name="GenNoise">
+        <values>
+          <valueof uniform   = "OUTPUT"
+                   type      = "IMAGE_TEXTURE"
+                   context   = "CURRENT"
+                   id        = "0"
+                   component = "UNIT"
+          />
+        </values>
+      </shader>
+      <imageTexutes>
+        <imageTexture UNIT="0" texture="NoiseTex">
+          <ACCESS value="WRITE_ONLY"/>
+          <LEVEL value="0"/>
+        </imageTexture>
+      </imageTexutes>
+    </material>
+
+    <material name="Planet">
+      <shader name="Planet">
+        <values>
+          <valueof uniform   = "NOISE_TEX"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "1"
+                   component = "UNIT"
+          />
+          <valueof uniform   = "PVM"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "PROJECTION_VIEW_MODEL"
+          />
+          <valueof uniform   = "NORMAL_MAT"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "NORMAL"
+          />
+        </values>
+      </shader>
+      <textures>
+        <texture UNIT="1" name="NoiseTex">
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+        </texture>
+      </textures>
+    </material>
+  </materials>
+</materialLib>

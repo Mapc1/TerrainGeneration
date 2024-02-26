@@ -1,0 +1,10 @@
+#version 460
+
+layout (local_size_x=1, local_size_y=1, local_size_z=1) in;
+
+uniform writeonly image2D OUTPUT;
+
+void main() {
+    ivec2 write_location = ivec2(gl_GlobalInvocationID.xy);
+    imageStore(OUTPUT, write_location, vec4(1.0));
+}
