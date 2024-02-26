@@ -71,12 +71,12 @@
           />
         </values>
       </shader>
-      <imageTexutes>
+      <imageTextures>
         <imageTexture UNIT="0" texture="NoiseTex">
           <ACCESS value="WRITE_ONLY"/>
           <LEVEL value="0"/>
         </imageTexture>
-      </imageTexutes>
+      </imageTextures>
     </material>
 
     <material name="Planet">
@@ -85,7 +85,7 @@
           <valueof uniform   = "NOISE_TEX"
                    type      = "TEXTURE_BINDING"
                    context   = "CURRENT"
-                   id        = "1"
+                   id        = "0"
                    component = "UNIT"
           />
           <valueof uniform   = "PVM"
@@ -101,7 +101,7 @@
         </values>
       </shader>
       <textures>
-        <texture UNIT="1" name="NoiseTex">
+        <texture UNIT="0" name="NoiseTex">
           <MIN_FILTER value="LINEAR"/>
           <MAG_FILTER value="LINEAR"/>
         </texture>
