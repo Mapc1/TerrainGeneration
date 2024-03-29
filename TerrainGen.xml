@@ -12,12 +12,21 @@
           <SCALE x="1000" y="1000" z="1000"/>
         </geometry>
       </scene>
+
+
+      <scene name="Plane">
+        <geometry name="plane" type="GRID" material="Plane" LENGTH="16" DIVISIONS="16"/>
+      </scene>
     </scenes>
 
     <viewports>
       <viewport name="MainViewport">
         <CLEAR_COLOR r="0.0" g="0.0" b="0.0"/>
       </viewport>
+
+      <viewport name="PlaneViewport">
+        <CLEAR_COLOR r="1.0" g="1.0" b="1.0"/>
+      </viewport> 
     </viewports>
 
     <cameras>
@@ -27,6 +36,13 @@
         <POSITION x="800" y="0.0" z="0.0"/>
         <VIEW  x="-1.0" y="0.0" z="0.0"/>
         <UP x="0.0" y="1.0" z="0.0"/>
+      </camera>
+
+      <camera name="PlaneCamera">
+        <viewport name="PlaneViewport"/>
+        <POSITION x="0.402" y="0.974" z="1.341" />
+        <LOOK_AT_POINT x="0" y="0" z="0" />
+        <NEAR value="0.01" />
       </camera>
     </cameras>
 
@@ -42,7 +58,7 @@
     </materialLibs>
   </assets>
 
-  <pipelines>
+  <pipelines default="PlaneGen">
     <pipeline name="TerrainGen" defaultCamera="MainCamera">
       <pass class="compute" name="GenNoise">
         <material name="GenNoise" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
@@ -75,5 +91,21 @@
         </materialMaps>
       </pass>
     </pipeline>
+ 
+    <pipeline name="PlaneGen" defaultCamera="PlaneCamera">
+      <pass name ="plane1">
+        <scenes>
+          <scene name="Plane"/>
+        </scenes>
+        <camera name="PlaneCamera"/>
+
+        <injectionMaps>
+          <map toMaterial="*">
+            <shader fromMaterial="Plane" fromLibrary="TerrainGen"/>
+          </map>
+        </injectionMaps>
+      </pass>
+    </pipeline>
+    
   </pipelines>
 </project>

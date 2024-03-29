@@ -23,6 +23,7 @@
     <shader name="GenNoise" cs="shaders/compute/GenNoise.comp"/>
     <shader name="Planet" vs="shaders/planet/Planet.vert" ps="shaders/planet/Planet.frag"/>
     <shader name="Skybox" vs="shaders/skybox/Skybox.vert" ps="shaders/skybox/Skybox.frag"/>
+    <shader name="Plane" vs="shaders/plane/plane/Plane.vert" ps="shaders/plane/plane/Plane.frag"/>
   </shaders>
 
   <states>
@@ -107,5 +108,14 @@
         </texture>
       </textures>
     </material>
+
+    <material name="Plane">
+        <shader name="Plane" >
+          <values>
+            <valueof uniform="m_pvm" type="RENDERER" component="PROJECTION_VIEW_MODEL" />
+            </values>
+      </shader>
+    </material>
+
   </materials>
 </materialLib>
