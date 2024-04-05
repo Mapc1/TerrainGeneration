@@ -2,11 +2,6 @@
 <project name="Terrain Generation VTR 24" width="1280" height="720">
   <assets>
     <scenes>
-      <scene name="Planet">
-        <geometry name="Planet" type="SPHERE" SLICES="1000" STACKS="1000" material="Planet">
-          <SCALE x="200" y="200" z="200"/>
-        </geometry>
-      </scene>
       <scene name="Skybox">
         <geometry name="Skybox" type="BOX" material="Skybox">
           <SCALE x="1000" y="1000" z="1000"/>
@@ -15,7 +10,7 @@
 
 
       <scene name="Plane">
-        <geometry name="plane" type="GRID" material="Plane" LENGTH="16" DIVISIONS="16"/>
+        <geometry name="plane" type="GRID" material="Plane" LENGTH="1024" DIVISIONS="1024"/>
       </scene>
     </scenes>
 
@@ -23,23 +18,11 @@
       <viewport name="MainViewport">
         <CLEAR_COLOR r="0.0" g="0.0" b="0.0"/>
       </viewport>
-
-      <viewport name="PlaneViewport">
-        <CLEAR_COLOR r="1.0" g="1.0" b="1.0"/>
-      </viewport> 
     </viewports>
 
     <cameras>
       <camera name="MainCamera">
         <viewport name="MainViewport"/>
-        <projection TYPE="PERSPECTIVE" FOV="60" NEAR="1" FAR="2000.0"/>
-        <POSITION x="800" y="0.0" z="0.0"/>
-        <VIEW  x="-1.0" y="0.0" z="0.0"/>
-        <UP x="0.0" y="1.0" z="0.0"/>
-      </camera>
-
-      <camera name="PlaneCamera">
-        <viewport name="PlaneViewport"/>
         <POSITION x="0.402" y="0.974" z="1.341" />
         <LOOK_AT_POINT x="0" y="0" z="0" />
         <NEAR value="0.01" />
@@ -58,15 +41,15 @@
     </materialLibs>
   </assets>
 
-  <pipelines default="PlaneGen">
+  <pipelines default="TerrainGen">
     <pipeline name="TerrainGen" defaultCamera="MainCamera">
       <pass class="compute" name="GenNoise">
         <material name="GenNoise" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
-      
-      <pass class="default" name="Render">
+
+      <pass name="Render">
         <scenes>
-          <scene name="Planet"/>
+          <scene name="Plane"/>
           <scene name="Skybox"/>
         </scenes>
         <lights>
@@ -76,9 +59,9 @@
 
         <injectionMaps>
           <map toMaterial="*">
-            <shader fromMaterial="Planet" fromLibrary="TerrainGen"/>
+            <shader fromMaterial="Terrain" fromLibrary="TerrainGen"/>
             <textures>
-              <texture name="NoiseTex" fromLibrary="TerrainGen" toUnit="0">
+              <texture name="DisplacementMap" fromLibrary="TerrainGen" toUnit="0">
                 <MIN_FILTER value="LINEAR"/>
                 <MAG_FILTER value="LINEAR"/>
               </texture>
@@ -86,26 +69,11 @@
           </map>
         </injectionMaps>
         <materialMaps>
-          <map fromMaterial="Planet" toLibrary="TerrainGen" toMaterial="Planet"/>
+          <map fromMaterial="Plane" toLibrary="TerrainGen" toMaterial="Terrain"/>
           <map fromMaterial="Skybox" toLibrary="TerrainGen" toMaterial="Skybox"/>
         </materialMaps>
       </pass>
     </pipeline>
- 
-    <pipeline name="PlaneGen" defaultCamera="PlaneCamera">
-      <pass name ="plane1">
-        <scenes>
-          <scene name="Plane"/>
-        </scenes>
-        <camera name="PlaneCamera"/>
 
-        <injectionMaps>
-          <map toMaterial="*">
-            <shader fromMaterial="Plane" fromLibrary="TerrainGen"/>
-          </map>
-        </injectionMaps>
-      </pass>
-    </pipeline>
-    
   </pipelines>
 </project>

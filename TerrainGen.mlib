@@ -2,13 +2,13 @@
 <materialLib name="TerrainGen">
   <textures>
     <!-- Noise texture: 16 bit float -->
-    <texture name="NoiseTex">
+    <texture name="DisplacementMap">
       <WIDTH value="1024"/>
       <HEIGHT value="1024"/>
-      <INTERNAL_FORMAT value="RGBA16F"/>
+      <INTERNAL_FORMAT value="RGBA32F"/>
       <MIPMAP value="true"/>
     </texture>
-    
+
     <cubeMap name="Skybox"
              filePosX="textures/skybox/px.png"
              fileNegX="textures/skybox/nx.png"
@@ -20,10 +20,14 @@
   </textures>
 
   <shaders>
-    <shader name="GenNoise" cs="shaders/compute/GenNoise.comp"/>
-    <shader name="Planet" vs="shaders/planet/Planet.vert" ps="shaders/planet/Planet.frag"/>
+    <shader name="GenNoise">
+      <cs>
+        <file name="shaders/compute/GenNoise.comp"/>
+        <file name="shaders/utils/PerlinNoise.glsl"/>
+      </cs>
+    </shader>
     <shader name="Skybox" vs="shaders/skybox/Skybox.vert" ps="shaders/skybox/Skybox.frag"/>
-    <shader name="Plane" vs="shaders/plane/plane/Plane.vert" ps="shaders/plane/plane/Plane.frag"/>
+    <shader name="Terrain" vs="shaders/terrain/Terrain.vert" ps="shaders/terrain/Terrain.frag"/>
   </shaders>
 
   <states>
@@ -64,7 +68,7 @@
     <material name="GenNoise">
       <shader name="GenNoise">
         <values>
-          <valueof uniform   = "OUTPUT"
+          <valueof uniform   = "DISPLACEMENT_MAP"
                    type      = "IMAGE_TEXTURE"
                    context   = "CURRENT"
                    id        = "0"
@@ -73,17 +77,17 @@
         </values>
       </shader>
       <imageTextures>
-        <imageTexture UNIT="0" texture="NoiseTex">
+        <imageTexture UNIT="0" texture="DisplacementMap">
           <ACCESS value="WRITE_ONLY"/>
           <LEVEL value="0"/>
         </imageTexture>
       </imageTextures>
     </material>
 
-    <material name="Planet">
-      <shader name="Planet">
+    <material name="Terrain">
+      <shader name="Terrain" >
         <values>
-          <valueof uniform   = "NOISE_TEX"
+          <valueof uniform   = "HEIGHT_MAP"
                    type      = "TEXTURE_BINDING"
                    context   = "CURRENT"
                    id        = "0"
@@ -102,19 +106,11 @@
         </values>
       </shader>
       <textures>
-        <texture UNIT="0" name="NoiseTex">
+        <texture UNIT="0" name="DisplacementMap">
           <MIN_FILTER value="LINEAR"/>
           <MAG_FILTER value="LINEAR"/>
         </texture>
       </textures>
-    </material>
-
-    <material name="Plane">
-        <shader name="Plane" >
-          <values>
-            <valueof uniform="m_pvm" type="RENDERER" component="PROJECTION_VIEW_MODEL" />
-            </values>
-      </shader>
     </material>
 
   </materials>
