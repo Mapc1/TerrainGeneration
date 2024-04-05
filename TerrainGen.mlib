@@ -19,7 +19,15 @@
     />
   </textures>
 
+  <renderTargets>
+    <renderTarget name="ShadowMap">
+      <SIZE width="4096" height="4096"/>
+      <depth name="ShadowMap" internalFormat="DEPTH_COMPONENT32F"/>
+    </renderTarget>
+  </renderTargets>
+
   <shaders>
+    <shader name="GenShadowMap" vs="shaders/shadow_map/GenShadowMap.vert" ps="shaders/shadow_map/GenShadowMap.frag"/>
     <shader name="GenNoise">
       <cs>
         <file name="shaders/compute/GenNoise.comp"/>
@@ -38,6 +46,18 @@
   </states>
 
   <materials>
+    <material name="GenShadowMap">
+      <shader name="GenShadowMap">
+        <values>
+          <valueof uniform   = "PVM"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "PROJECTION_VIEW_MODEL"
+          />
+        </values>
+      </shader>
+    </material>
+
     <material name="Skybox">
       <shader name="Skybox">
         <values>
@@ -87,26 +107,59 @@
     <material name="Terrain">
       <shader name="Terrain" >
         <values>
-          <valueof uniform   = "HEIGHT_MAP"
+          <valueof uniform   = "DISPLACEMENT_MAP"
                    type      = "TEXTURE_BINDING"
                    context   = "CURRENT"
                    id        = "0"
                    component = "UNIT"
           />
+          <valueof uniform   = "SHADOW_MAP"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "1"
+                   component = "UNIT"
+          />
+
           <valueof uniform   = "PVM"
                    type      = "RENDERER"
                    context   = "CURRENT"
                    component = "PROJECTION_VIEW_MODEL"
+          />
+          <valueof uniform   = "M"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "MODEL"
+          />
+          <valueof uniform   = "V"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "VIEW"
           />
           <valueof uniform   = "NORMAL_MAT"
                    type      = "RENDERER"
                    context   = "CURRENT"
                    component = "NORMAL"
           />
+          <valueof uniform   = "LIGHT_DIR"
+                   type      = "LIGHT"
+                   context   = "Sun"
+                   component = "DIRECTION"
+          />
+          <valueof uniform   = "LIGHT_SPACE_MAT"
+                   type      = "CAMERA"
+                   context   = "TerrainGen#GenShadowMap-LightCam"
+                   component = "TS05_PVM_MATRIX"
+          />
         </values>
       </shader>
       <textures>
         <texture UNIT="0" name="DisplacementMap">
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+        </texture>
+        <texture name="ShadowMap" UNIT="1">
+          <COMPARE_MODE value="COMPARE_REF_TO_TEXTURE"/>
+          <COMPARE_FUNC value="LEQUAL"/>
           <MIN_FILTER value="LINEAR"/>
           <MAG_FILTER value="LINEAR"/>
         </texture>
