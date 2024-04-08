@@ -32,10 +32,20 @@
       <cs>
         <file name="shaders/compute/GenNoise.comp"/>
         <file name="shaders/utils/PerlinNoise.glsl"/>
+        <file name="shaders/curves/TerrainCurves.glsl"/>
       </cs>
     </shader>
     <shader name="Skybox" vs="shaders/skybox/Skybox.vert" ps="shaders/skybox/Skybox.frag"/>
-    <shader name="Terrain" vs="shaders/terrain/Terrain.vert" ps="shaders/terrain/Terrain.frag"/>
+    <shader name="Terrain">
+      <vs>
+        <file name="shaders/terrain/Terrain.vert"/> 
+        <file name="shaders/curves/TerrainCurves.glsl"/>
+      </vs>
+      <ps>
+        <file name="shaders/terrain/Terrain.frag"/> 
+        <file name="shaders/curves/TerrainCurves.glsl"/>
+      </ps>
+    </shader>
   </shaders>
 
   <states>

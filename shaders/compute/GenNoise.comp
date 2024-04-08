@@ -14,9 +14,11 @@ const vec2 NOISE_PERIOD = vec2(100.0,100.0);
 
 float cnoise(vec2 P);
 float pnoise(vec2 P, vec2 rep);
+float getContinental(float noise, float factor);
+
 
 float getDisplacement(vec2 coords) {
-  return (pnoise(coords * DRAG_AMOUNT, vec2(1024,1024)) * 2 - 1) * DISPLACEMENT_STRENGTH;
+  return getContinental((pnoise(coords * DRAG_AMOUNT, vec2(1024,1024)) /* 2 - 1*/), DISPLACEMENT_STRENGTH);
 }
 
 vec4 calcDisplacementAndNormal(vec2 noiseCoord) {
