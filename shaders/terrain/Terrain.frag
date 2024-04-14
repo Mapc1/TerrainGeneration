@@ -34,6 +34,12 @@ float sampleShadowMap(vec4 light_space_coord, vec3 normal, vec3 lightDir) {
 
 void main(){
     vec4 diff_color = vec4(1.0,0.0,0.0,1.0);
+    if (Inputs.worldPos.y <= -70.0) diff_color = vec4(0,0,0,1);
+    else if (Inputs.worldPos.y < 0.0) diff_color = vec4(0,0,1,1);
+    else if (Inputs.worldPos.y >= 70.0) diff_color = vec4(1);
+    else diff_color = vec4(0,1,0,1);
+    
+    
     vec4 world_pos = Inputs.worldPos;
     vec4 light_space_coord = Inputs.lightSpaceCoord;
     vec3 normal = normalize(Inputs.normal);
@@ -42,4 +48,5 @@ void main(){
     float luminance = sampleShadowMap(light_space_coord, normal, light_dir);
     color = 0.25 * diff_color;
     color += luminance * diff_color;
+    
 }
