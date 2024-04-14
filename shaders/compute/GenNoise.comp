@@ -6,7 +6,7 @@ uniform writeonly image2D DISPLACEMENT_MAP;
 
 // Pending name
 uniform float DRAG_AMOUNT = 0.01;
-uniform float DISPLACEMENT_STRENGTH = 100.0;
+uniform float DISPLACEMENT_STRENGTH = 10.0;
 
 
 const vec2 NOISE_PERIOD = vec2(100.0,100.0);
