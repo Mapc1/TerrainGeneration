@@ -7,6 +7,7 @@
       <attribute type="STATE" name="STARTING_FREQ" data="FLOAT" value="0.01"/>
       <attribute type="STATE" name="GAIN" data="FLOAT" value="0.5"/>
       <attribute type="STATE" name="LACUNARITY" data="FLOAT" value="2.0"/>
+      <attribute type="STATE" name="DISPLACEMENT_STRENGTH" data="FLOAT" value="100.0"/>
     </attributes>
 
     <scenes>
@@ -24,6 +25,17 @@
     <viewports>
       <viewport name="MainViewport">
         <CLEAR_COLOR r="0.0" g="0.0" b="0.0"/>
+      </viewport>
+
+      <viewport name="LeftViewport">
+        <CLEAR_COLOR r="0.0" g="0.0" b="0.0"/>
+        <SIZE width="0.5" height="1.0"/>
+        <ORIGIN x="0" y="0"/>
+      </viewport>
+      <viewport name="RightViewport">
+        <CLEAR_COLOR r="0.0" g="0.0" b="0.0"/>
+        <SIZE width="0.5" height="1.0"/>
+        <ORIGIN x="0.5" y="0"/>
       </viewport>
     </viewports>
 
@@ -53,6 +65,10 @@
     <pipeline name="TerrainGen" defaultCamera="MainCamera">
       <pass class="compute" name="GenContinental">
         <material name="GenContinental" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
+      </pass>
+
+      <pass class="compute" name="GenErosion">
+        <material name="GenErosion" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
       <pass class="compute" name="GenDisplacement">
@@ -111,9 +127,19 @@
         <material name="GenContinental" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
+      <pass class="compute" name="GenErosion">
+        <material name="GenErosion" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
+      </pass>
+
       <pass class="quad" name="DisplayContinentalTexture">
-        <viewport name="MainViewport"/>
+        <COLOR_CLEAR value="true" />
+        <viewport name="LeftViewport"/>
         <material name="DisplayContinentalTexture" fromLibrary="TerrainGen"/>
+      </pass>
+      <pass class="quad" name="DisplayErosionTexture">
+        <COLOR_CLEAR value="true" />
+        <viewport name="RightViewport"/>
+        <material name="DisplayErosionTexture" fromLibrary="TerrainGen"/>
       </pass>
     </pipeline>
   </pipelines>
@@ -125,9 +151,22 @@
       <var label="Starting frequency" type="STATE" context="TerrainGen::GenContinental" component="STARTING_FREQ" def="min=0.0001 max=3"/>
       <var label="Gain" type="STATE" context="TerrainGen::GenContinental" component="GAIN" def="min=0.0001 max=3"/>
       <var label="Lacunarity" type="STATE" context="TerrainGen::GenContinental" component="LACUNARITY" def="min=0.0001 max=3"/>
-      </window>
-      <window label="Other settings">
-        <pipelineList label="Pipeline list"/>
-      </window>
+    </window>
+
+    <window label="Erosion Parameters">
+      <var label="Number of octaves" type="STATE" context="TerrainGen::GenErosion" component="OCTAVES" def="min=1 max=10"/>
+      <var label="Starting amplitude" type="STATE" context="TerrainGen::GenErosion" component="STARTING_AMPLITUDE" def="min=0.0001 max=10"/>
+      <var label="Starting frequency" type="STATE" context="TerrainGen::GenErosion" component="STARTING_FREQ" def="min=0.0001 max=3"/>
+      <var label="Gain" type="STATE" context="TerrainGen::GenErosion" component="GAIN" def="min=0.0001 max=3"/>
+      <var label="Lacunarity" type="STATE" context="TerrainGen::GenErosion" component="LACUNARITY" def="min=0.0001 max=3"/>
+    </window>
+
+    <window label="Displacement Parameters">
+      <var label="Displacement strength" type="STATE" context="TerrainGen::GenDisplacement" component="DISPLACEMENT_STRENGTH" def="min=1 max=1000"/>
+    </window>
+
+    <window label="Other settings">
+      <pipelineList label="Pipeline list"/>
+    </window>
   </interface>
 </project>

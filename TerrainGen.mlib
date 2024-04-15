@@ -16,6 +16,13 @@
       <MIPMAP value="true"/>
     </texture>
 
+    <texture name="ErosionMap">
+      <WIDTH value="1024"/>
+      <HEIGHT value="1024"/>
+      <INTERNAL_FORMAT value="RGBA32F"/>
+      <MIPMAP value="true"/>
+    </texture>
+
     <cubeMap name="Skybox"
              filePosX="textures/skybox/px.png"
              fileNegX="textures/skybox/nx.png"
@@ -160,6 +167,53 @@
       </imageTextures>
     </material>
 
+    <material name="GenErosion">
+      <shader name="GenNoise">
+        <values>
+          <!-- Output texture -->
+          <valueof uniform   = "OUTPUT"
+                   type      = "IMAGE_TEXTURE"
+                   context   = "CURRENT"
+                   id        = "0"
+                   component = "UNIT"
+          />
+
+          <!-- Programable parameters -->
+          <valueof uniform   = "OCTAVES"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "OCTAVES"
+          />
+          <valueof uniform   = "STARTING_AMPLITUDE"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "STARTING_AMPLITUDE"
+          />
+          <valueof uniform   = "STARTING_FREQ"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "STARTING_FREQ"
+          />
+          <valueof uniform   = "GAIN"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "GAIN"
+          />
+          <valueof uniform   = "LACUNARITY"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "LACUNARITY"
+          />
+        </values>
+      </shader>
+      <imageTextures>
+        <imageTexture UNIT="0" texture="ErosionMap">
+          <ACCESS value="WRITE_ONLY"/>
+          <LEVEL value="0"/>
+        </imageTexture>
+      </imageTextures>
+    </material>
+
     <material name="GenDisplacement">
       <shader name="GenDisplacement">
         <values>
@@ -169,11 +223,23 @@
                    id        = "0"
                    component = "UNIT"
           />
-          <valueof uniform   = "DISPLACEMENT_MAP"
-                   type      = "IMAGE_TEXTURE"
+          <valueof uniform   = "EROSION_MAP"
+                   type      = "TEXTURE_BINDING"
                    context   = "CURRENT"
                    id        = "1"
                    component = "UNIT"
+          />
+          <valueof uniform   = "DISPLACEMENT_MAP"
+                   type      = "IMAGE_TEXTURE"
+                   context   = "CURRENT"
+                   id        = "2"
+                   component = "UNIT"
+          />
+
+          <valueof uniform   = "DISPLACEMENT_STRENGTH"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "DISPLACEMENT_STRENGTH"
           />
         </values>
       </shader>
@@ -185,9 +251,16 @@
           <WRAP_R value="CLAMP_TO_EDGE"/>
           <WRAP_T value="CLAMP_TO_EDGE"/>
         </texture>
+        <texture UNIT="1" name="ErosionMap">
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+          <WRAP_S value="CLAMP_TO_EDGE"/>
+          <WRAP_R value="CLAMP_TO_EDGE"/>
+          <WRAP_T value="CLAMP_TO_EDGE"/>
+        </texture>
       </textures>
       <imageTextures>
-        <imageTexture UNIT="1" texture="DisplacementMap">
+        <imageTexture UNIT="2" texture="DisplacementMap">
           <ACCESS value="WRITE_ONLY"/>
           <LEVEL value="0"/>
         </imageTexture>
@@ -207,6 +280,12 @@
                    type      = "TEXTURE_BINDING"
                    context   = "CURRENT"
                    id        = "1"
+                   component = "UNIT"
+          />
+          <valueof uniform   = "EROSION_MAP"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "2"
                    component = "UNIT"
           />
 
@@ -250,6 +329,13 @@
           <WRAP_R value="CLAMP_TO_EDGE"/>
           <WRAP_T value="CLAMP_TO_EDGE"/>
         </texture>
+        <texture UNIT="2" name="ErosionMap">
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+          <WRAP_S value="CLAMP_TO_EDGE"/>
+          <WRAP_R value="CLAMP_TO_EDGE"/>
+          <WRAP_T value="CLAMP_TO_EDGE"/>
+        </texture>
         <texture name="ShadowMap" UNIT="1">
           <COMPARE_MODE value="COMPARE_REF_TO_TEXTURE"/>
           <COMPARE_FUNC value="LEQUAL"/>
@@ -259,6 +345,7 @@
       </textures>
     </material>
 
+    <!-- Debug views -->
     <material name="DisplayContinentalTexture">
       <shader name="DisplayTexture">
         <values>
@@ -272,6 +359,25 @@
       </shader>
       <textures>
         <texture UNIT="0" name="ContinentalMap">
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+        </texture>
+      </textures>
+    </material>
+
+    <material name="DisplayErosionTexture">
+      <shader name="DisplayTexture">
+        <values>
+          <valueof uniform   = "TEXTURE"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "0"
+                   component = "UNIT"
+          />
+        </values>
+      </shader>
+      <textures>
+        <texture UNIT="0" name="ErosionMap">
           <MIN_FILTER value="LINEAR"/>
           <MAG_FILTER value="LINEAR"/>
         </texture>
