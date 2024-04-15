@@ -55,8 +55,8 @@
         <material name="GenContinental" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
-      <pass class="compute" name="GenNoise">
-        <material name="GenNoise" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
+      <pass class="compute" name="GenDisplacement">
+        <material name="GenDisplacement" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
       <pass class="depthmap" name="GenShadowMap">

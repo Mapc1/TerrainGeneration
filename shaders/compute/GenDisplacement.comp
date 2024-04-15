@@ -1,0 +1,61 @@
+#version 460
+
+layout (local_size_x=1, local_size_y=1, local_size_z=1) in;
+
+// Input textures
+uniform sampler2D CONTINENTAL_MAP;
+
+// Output texture
+uniform writeonly image2D DISPLACEMENT_MAP;
+
+// Pending name
+uniform float DRAG_AMOUNT = 0.01;
+uniform float DISPLACEMENT_STRENGTH = 100.0;
+
+
+const vec2 NOISE_PERIOD = vec2(100.0,100.0);
+
+
+float cnoise(vec2 P);
+float pnoise(vec2 P, vec2 rep);
+float getContinental(float noise, float factor);
+float getErosion(float noise, float factor);
+
+
+float getDisplacement(vec2 coords) {
+  vec2 tex_coords = coords / textureSize(CONTINENTAL_MAP, 0);
+
+  return getContinental(texture(CONTINENTAL_MAP, tex_coords).r, getErosion(-1/*change to noise here*/,DISPLACEMENT_STRENGTH));
+}
+
+vec4 calcDisplacementAndNormal(vec2 noiseCoord) {
+    const vec3 offset = vec3(-1, 0, 1);
+    const vec2 size = vec2(2.0,0.0);
+
+    vec2 offxy = vec2(offset.x , offset.y);
+    vec2 offzy = vec2(offset.z , offset.y);
+    vec2 offyx = vec2(offset.y , offset.x);
+    vec2 offyz = vec2(offset.y , offset.z);
+
+    float displacement = getDisplacement(noiseCoord);
+
+    float s11 = displacement;
+    float s01 = getDisplacement(noiseCoord+offxy);
+    float s21 = getDisplacement(noiseCoord+offzy);
+    float s10 = getDisplacement(noiseCoord+offyx);
+    float s12 = getDisplacement(noiseCoord+offyz);
+    vec3 va = normalize(vec3(size.x, s21-s01, size.y));
+    vec3 vb = normalize(vec3(size.y, s12-s10, -size.x));
+
+    return vec4(cross(va,vb), displacement);
+}
+
+void main() {
+    ivec2 write_location = ivec2(gl_GlobalInvocationID.xy);
+
+    vec4 displacement_and_normal = calcDisplacementAndNormal(write_location);
+    vec3 normal = displacement_and_normal.xyz;
+    float height = displacement_and_normal.w;
+
+    imageStore(DISPLACEMENT_MAP, write_location, vec4(normal,height));
+}
