@@ -1,3 +1,27 @@
+float cnoise(vec2 P);
+
+float octaveNoise(
+    vec2 pos,
+    int octaves,
+    float startingAmplitude,
+    float startingFreq,
+    float gain,
+    float lacunarity
+) {
+    float noise = 0.0;
+    float cur_amplitude = startingAmplitude;
+    float cur_freq = startingFreq;
+
+    for (int i = 0; i < octaves; i++) {
+        noise += cnoise(pos*cur_freq) * cur_amplitude;
+        cur_amplitude *= gain;
+        cur_freq *= lacunarity;
+    }
+
+    return noise;
+}
+
+
 //
 // GLSL textureless classic 2D noise "cnoise",
 // with an RSL-style periodic variant "pnoise".

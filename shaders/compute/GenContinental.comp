@@ -11,32 +11,18 @@ uniform float LACUNARITY = 2;
 
 uniform writeonly image2D CONTINENTAL_MAP;
 
-float cnoise(vec2 P);
-
-float genNoise(
+float octaveNoise(
     vec2 pos,
     int octaves,
     float startingAmplitude,
     float startingFreq,
     float gain,
     float lacunarity
-) {
-    float noise = 0.0;
-    float cur_amplitude = startingAmplitude;
-    float cur_freq = startingFreq;
-
-    for (int i = 0; i < octaves; i++) {
-        noise += cnoise(pos*cur_freq) * cur_amplitude;
-        cur_amplitude *= gain;
-        cur_freq *= lacunarity;
-    }
-
-    return noise;
-}
+);
 
 void main() {
     ivec2 write_location = ivec2(gl_GlobalInvocationID.xy);
-    float noise = genNoise(vec2(write_location), OCTAVES, STARTING_AMPLITUDE, STARTING_FREQ, GAIN, LACUNARITY);
+    float noise = octaveNoise(vec2(write_location), OCTAVES, STARTING_AMPLITUDE, STARTING_FREQ, GAIN, LACUNARITY);
     noise = abs(noise);
 
     imageStore(CONTINENTAL_MAP, write_location, vec4(noise,noise,noise,1.0));
