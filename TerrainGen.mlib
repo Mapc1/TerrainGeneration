@@ -282,12 +282,6 @@
                    id        = "1"
                    component = "UNIT"
           />
-          <valueof uniform   = "EROSION_MAP"
-                   type      = "TEXTURE_BINDING"
-                   context   = "CURRENT"
-                   id        = "2"
-                   component = "UNIT"
-          />
 
           <valueof uniform   = "PVM"
                    type      = "RENDERER"
@@ -323,13 +317,6 @@
       </shader>
       <textures>
         <texture UNIT="0" name="DisplacementMap">
-          <MIN_FILTER value="LINEAR"/>
-          <MAG_FILTER value="LINEAR"/>
-          <WRAP_S value="CLAMP_TO_EDGE"/>
-          <WRAP_R value="CLAMP_TO_EDGE"/>
-          <WRAP_T value="CLAMP_TO_EDGE"/>
-        </texture>
-        <texture UNIT="2" name="ErosionMap">
           <MIN_FILTER value="LINEAR"/>
           <MAG_FILTER value="LINEAR"/>
           <WRAP_S value="CLAMP_TO_EDGE"/>
