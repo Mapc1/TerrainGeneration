@@ -11,14 +11,16 @@ float octaveNoise(
     float noise = 0.0;
     float cur_amplitude = startingAmplitude;
     float cur_freq = startingFreq;
+    float scale = 0.0;
 
     for (int i = 0; i < octaves; i++) {
         noise += cnoise(pos*cur_freq) * cur_amplitude;
+        scale += cur_amplitude;
         cur_amplitude *= gain;
         cur_freq *= lacunarity;
     }
 
-    return noise;
+    return noise / scale;
 }
 
 
