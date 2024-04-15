@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Terrain Generation VTR 24" width="1280" height="720">
   <assets>
+    <attributes>
+      <attribute type="STATE" name="OCTAVES" data="INT" value="1"/>
+      <attribute type="STATE" name="STARTING_AMPLITUDE" data="FLOAT" value="1.0"/>
+      <attribute type="STATE" name="STARTING_FREQ" data="FLOAT" value="0.01"/>
+      <attribute type="STATE" name="GAIN" data="FLOAT" value="0.5"/>
+      <attribute type="STATE" name="LACUNARITY" data="FLOAT" value="2.0"/>
+    </attributes>
+
     <scenes>
       <scene name="Skybox">
         <geometry name="Skybox" type="BOX" material="Skybox">
@@ -43,6 +51,10 @@
 
   <pipelines default="TerrainGen">
     <pipeline name="TerrainGen" defaultCamera="MainCamera">
+      <pass class="compute" name="GenContinental">
+        <material name="GenContinental" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
+      </pass>
+
       <pass class="compute" name="GenNoise">
         <material name="GenNoise" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
@@ -94,5 +106,28 @@
       </pass>
     </pipeline>
 
+    <pipeline name="NoiseVisualization">
+      <pass class="compute" name="GenContinental">
+        <material name="GenContinental" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
+      </pass>
+
+      <pass class="quad" name="DisplayContinentalTexture">
+        <viewport name="MainViewport"/>
+        <material name="DisplayContinentalTexture" fromLibrary="TerrainGen"/>
+      </pass>
+    </pipeline>
   </pipelines>
+
+  <interface>
+    <window label="Continental Parameters">
+      <var label="Number of octaves" type="STATE" context="TerrainGen::GenContinental" component="OCTAVES" def="min=1 max=10"/>
+      <var label="Starting amplitude" type="STATE" context="TerrainGen::GenContinental" component="STARTING_AMPLITUDE" def="min=0.0001 max=10"/>
+      <var label="Starting frequency" type="STATE" context="TerrainGen::GenContinental" component="STARTING_FREQ" def="min=0.0001 max=3"/>
+      <var label="Gain" type="STATE" context="TerrainGen::GenContinental" component="GAIN" def="min=0.0001 max=3"/>
+      <var label="Lacunarity" type="STATE" context="TerrainGen::GenContinental" component="LACUNARITY" def="min=0.0001 max=3"/>
+      </window>
+      <window label="Other settings">
+        <pipelineList label="Pipeline list"/>
+      </window>
+  </interface>
 </project>

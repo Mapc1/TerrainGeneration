@@ -9,6 +9,13 @@
       <MIPMAP value="true"/>
     </texture>
 
+    <texture name="ContinentalMap">
+      <WIDTH value="1024"/>
+      <HEIGHT value="1024"/>
+      <INTERNAL_FORMAT value="RGBA32F"/>
+      <MIPMAP value="true"/>
+    </texture>
+
     <cubeMap name="Skybox"
              filePosX="textures/skybox/px.png"
              fileNegX="textures/skybox/nx.png"
@@ -28,6 +35,12 @@
 
   <shaders>
     <shader name="GenShadowMap" vs="shaders/shadow_map/GenShadowMap.vert" ps="shaders/shadow_map/GenShadowMap.frag"/>
+    <shader name="GenContinental">
+      <cs>
+        <file name="shaders/compute/GenContinental.comp"/>
+        <file name="shaders/utils/PerlinNoise.glsl"/>
+      </cs>
+    </shader>
     <shader name="GenNoise">
       <cs>
         <file name="shaders/compute/GenNoise.comp"/>
@@ -46,6 +59,11 @@
         <file name="shaders/curves/TerrainCurves.glsl"/>
       </ps>
     </shader>
+
+    <shader name="DisplayTexture"
+            vs="shaders/debug/display_texture/DisplayTexture.vert"
+            ps="shaders/debug/display_texture/DisplayTexture.frag"
+    />
   </shaders>
 
   <states>
@@ -95,19 +113,81 @@
       <state name="Skybox"/>
     </material>
 
-    <material name="GenNoise">
-      <shader name="GenNoise">
+    <material name="GenContinental">
+      <shader name="GenContinental">
         <values>
-          <valueof uniform   = "DISPLACEMENT_MAP"
+          <!-- Output texture -->
+          <valueof uniform   = "CONTINENTAL_MAP"
                    type      = "IMAGE_TEXTURE"
                    context   = "CURRENT"
                    id        = "0"
                    component = "UNIT"
           />
+
+          <!-- Programable parameters -->
+          <valueof uniform   = "OCTAVES"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "OCTAVES"
+          />
+          <valueof uniform   = "STARTING_AMPLITUDE"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "STARTING_AMPLITUDE"
+          />
+          <valueof uniform   = "STARTING_FREQ"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "STARTING_FREQ"
+          />
+          <valueof uniform   = "GAIN"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "GAIN"
+          />
+          <valueof uniform   = "LACUNARITY"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "LACUNARITY"
+          />
         </values>
       </shader>
       <imageTextures>
-        <imageTexture UNIT="0" texture="DisplacementMap">
+        <imageTexture UNIT="0" texture="ContinentalMap">
+          <ACCESS value="WRITE_ONLY"/>
+          <LEVEL value="0"/>
+        </imageTexture>
+      </imageTextures>
+    </material>
+
+    <material name="GenNoise">
+      <shader name="GenNoise">
+        <values>
+          <valueof uniform   = "CONTINENTAL_MAP"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "0"
+                   component = "UNIT"
+          />
+          <valueof uniform   = "DISPLACEMENT_MAP"
+                   type      = "IMAGE_TEXTURE"
+                   context   = "CURRENT"
+                   id        = "1"
+                   component = "UNIT"
+          />
+        </values>
+      </shader>
+      <textures>
+        <texture UNIT="0" name="ContinentalMap">
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+          <WRAP_S value="CLAMP_TO_EDGE"/>
+          <WRAP_R value="CLAMP_TO_EDGE"/>
+          <WRAP_T value="CLAMP_TO_EDGE"/>
+        </texture>
+      </textures>
+      <imageTextures>
+        <imageTexture UNIT="1" texture="DisplacementMap">
           <ACCESS value="WRITE_ONLY"/>
           <LEVEL value="0"/>
         </imageTexture>
@@ -166,6 +246,9 @@
         <texture UNIT="0" name="DisplacementMap">
           <MIN_FILTER value="LINEAR"/>
           <MAG_FILTER value="LINEAR"/>
+          <WRAP_S value="CLAMP_TO_EDGE"/>
+          <WRAP_R value="CLAMP_TO_EDGE"/>
+          <WRAP_T value="CLAMP_TO_EDGE"/>
         </texture>
         <texture name="ShadowMap" UNIT="1">
           <COMPARE_MODE value="COMPARE_REF_TO_TEXTURE"/>
@@ -176,5 +259,23 @@
       </textures>
     </material>
 
+    <material name="DisplayContinentalTexture">
+      <shader name="DisplayTexture">
+        <values>
+          <valueof uniform   = "TEXTURE"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "0"
+                   component = "UNIT"
+          />
+        </values>
+      </shader>
+      <textures>
+        <texture UNIT="0" name="ContinentalMap">
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+        </texture>
+      </textures>
+    </material>
   </materials>
 </materialLib>

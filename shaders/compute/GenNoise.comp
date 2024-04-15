@@ -2,6 +2,10 @@
 
 layout (local_size_x=1, local_size_y=1, local_size_z=1) in;
 
+// Input textures
+uniform sampler2D CONTINENTAL_MAP;
+
+// Output texture
 uniform writeonly image2D DISPLACEMENT_MAP;
 
 // Pending name
@@ -19,7 +23,9 @@ float getErosion(float noise, float factor);
 
 
 float getDisplacement(vec2 coords) {
-  return getContinental((pnoise(coords * DRAG_AMOUNT, vec2(1024,1024)) /* * 2 - 1 */) , getErosion(-1/*change to noise here*/,DISPLACEMENT_STRENGTH));
+  vec2 tex_coords = coords / textureSize(CONTINENTAL_MAP, 0);
+
+  return getContinental(texture(CONTINENTAL_MAP, tex_coords).r, getErosion(-1/*change to noise here*/,DISPLACEMENT_STRENGTH));
 }
 
 vec4 calcDisplacementAndNormal(vec2 noiseCoord) {
