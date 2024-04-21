@@ -11,7 +11,7 @@ uniform writeonly image2D DISPLACEMENT_MAP;
 
 // Pending name
 uniform float DRAG_AMOUNT = 0.01;
-uniform float DISPLACEMENT_STRENGTH = 100.0;
+uniform float DISPLACEMENT_STRENGTH = 1000.0;
 
 
 const vec2 NOISE_PERIOD = vec2(100.0,100.0);
@@ -21,6 +21,7 @@ float cnoise(vec2 P);
 float pnoise(vec2 P, vec2 rep);
 float getContinental(float noise, float factor);
 float getErosion(float noise, float factor);
+float getPeaksNValleys(float noise, float factor);
 
 
 float getDisplacement(vec2 coords) {
@@ -29,7 +30,11 @@ float getDisplacement(vec2 coords) {
   float continental_noise = texture(CONTINENTAL_MAP, tex_coords).r;
   float erosion_noise = texture(EROSION_MAP, tex_coords).r * 2 - 1;
 
+  //float displacement = (getContinental(continental_noise, 1) + getErosion(erosion_noise, 1) + getPeaksNValleys(0.5,1)) / 3;
+
   return getErosion(erosion_noise, getContinental(continental_noise,DISPLACEMENT_STRENGTH));
+  //return getContinental(tex_coords.x * 2 -1, DISPLACEMENT_STRENGTH);
+  //return getErosion(tex_coords.x * 2 - 1, DISPLACEMENT_STRENGTH);
 }
 
 vec4 calcDisplacementAndNormal(vec2 noiseCoord) {
