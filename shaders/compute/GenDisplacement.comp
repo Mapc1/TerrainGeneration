@@ -5,6 +5,7 @@ layout (local_size_x=1, local_size_y=1, local_size_z=1) in;
 // Input textures
 uniform sampler2D CONTINENTAL_MAP;
 uniform sampler2D EROSION_MAP;
+uniform sampler2D PEAKS_AND_VALLEYS_MAP;
 
 // Output texture
 uniform writeonly image2D DISPLACEMENT_MAP;
@@ -12,6 +13,9 @@ uniform writeonly image2D DISPLACEMENT_MAP;
 // Pending name
 uniform float DRAG_AMOUNT = 0.01;
 uniform float DISPLACEMENT_STRENGTH = 1000.0;
+uniform float CONTINENTAL_POWER = 5.0;
+uniform float EROSION_POWER = 1.0;
+uniform float PEAKS_AND_VALLEYS_POWER = 1.0;
 
 
 const vec2 NOISE_PERIOD = vec2(100.0,100.0);
@@ -28,11 +32,12 @@ float getDisplacement(vec2 coords) {
   vec2 tex_coords = coords / textureSize(CONTINENTAL_MAP, 0);
 
   float continental_noise = texture(CONTINENTAL_MAP, tex_coords).r;
-  float erosion_noise = texture(EROSION_MAP, tex_coords).r * 2 - 1;
+  float erosion_noise = texture(EROSION_MAP, tex_coords).r;
+  float peaks_and_valleys_noise = texture(PEAKS_AND_VALLEYS_MAP, tex_coords).r;
 
-  //float displacement = (getContinental(continental_noise, 1) + getErosion(erosion_noise, 1) + getPeaksNValleys(0.5,1)) / 3;
+  return (getContinental(continental_noise, CONTINENTAL_POWER) + getErosion(erosion_noise, EROSION_POWER) + getPeaksNValleys(peaks_and_valleys_noise, PEAKS_AND_VALLEYS_POWER)) / 3 * DISPLACEMENT_STRENGTH;
 
-  return getErosion(erosion_noise, getContinental(continental_noise,DISPLACEMENT_STRENGTH));
+//  return getPeaksNValleys(peaks_and_valleys_noise, getErosion(erosion_noise, getContinental(continental_noise,DISPLACEMENT_STRENGTH)));
   //return getContinental(tex_coords.x * 2 -1, DISPLACEMENT_STRENGTH);
   //return getErosion(tex_coords.x * 2 - 1, DISPLACEMENT_STRENGTH);
 }

@@ -23,6 +23,13 @@
       <MIPMAP value="true"/>
     </texture>
 
+    <texture name="PeaksAndValleysMap">
+      <WIDTH value="1024"/>
+      <HEIGHT value="1024"/>
+      <INTERNAL_FORMAT value="RGBA32F"/>
+      <MIPMAP value="true"/>
+    </texture>
+
     <cubeMap name="Skybox"
              filePosX="textures/skybox/px.png"
              fileNegX="textures/skybox/nx.png"
@@ -214,6 +221,53 @@
       </imageTextures>
     </material>
 
+    <material name="GenPeaksAndValleys">
+      <shader name="GenNoise">
+        <values>
+          <!-- Output texture -->
+          <valueof uniform   = "OUTPUT"
+                   type      = "IMAGE_TEXTURE"
+                   context   = "CURRENT"
+                   id        = "0"
+                   component = "UNIT"
+          />
+
+          <!-- Programable parameters -->
+          <valueof uniform   = "OCTAVES"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "OCTAVES"
+          />
+          <valueof uniform   = "STARTING_AMPLITUDE"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "STARTING_AMPLITUDE"
+          />
+          <valueof uniform   = "STARTING_FREQ"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "STARTING_FREQ"
+          />
+          <valueof uniform   = "GAIN"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "GAIN"
+          />
+          <valueof uniform   = "LACUNARITY"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "LACUNARITY"
+          />
+        </values>
+      </shader>
+      <imageTextures>
+        <imageTexture UNIT="0" texture="PeaksAndValleysMap">
+          <ACCESS value="WRITE_ONLY"/>
+          <LEVEL value="0"/>
+        </imageTexture>
+      </imageTextures>
+    </material>
+
     <material name="GenDisplacement">
       <shader name="GenDisplacement">
         <values>
@@ -229,10 +283,16 @@
                    id        = "1"
                    component = "UNIT"
           />
+          <valueof uniform   = "PEAKS_AND_VALLEYS_MAP"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "2"
+                   component = "UNIT"
+          />
           <valueof uniform   = "DISPLACEMENT_MAP"
                    type      = "IMAGE_TEXTURE"
                    context   = "CURRENT"
-                   id        = "2"
+                   id        = "3"
                    component = "UNIT"
           />
 
@@ -240,6 +300,21 @@
                    type      = "STATE"
                    context   = "CURRENT"
                    component = "DISPLACEMENT_STRENGTH"
+          />
+          <valueof uniform   = "CONTINENTAL_POWER"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "CONTINENTAL_POWER"
+          />
+          <valueof uniform   = "EROSION_POWER"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "EROSION_POWER"
+          />
+          <valueof uniform   = "PEAKS_AND_VALLEYS_POWER"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "PEAKS_AND_VALLEYS_POWER"
           />
         </values>
       </shader>
@@ -258,9 +333,16 @@
           <WRAP_R value="CLAMP_TO_EDGE"/>
           <WRAP_T value="CLAMP_TO_EDGE"/>
         </texture>
+        <texture UNIT="2" name="PeaksAndValleysMap">
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+          <WRAP_S value="CLAMP_TO_EDGE"/>
+          <WRAP_R value="CLAMP_TO_EDGE"/>
+          <WRAP_T value="CLAMP_TO_EDGE"/>
+        </texture>
       </textures>
       <imageTextures>
-        <imageTexture UNIT="2" texture="DisplacementMap">
+        <imageTexture UNIT="3" texture="DisplacementMap">
           <ACCESS value="WRITE_ONLY"/>
           <LEVEL value="0"/>
         </imageTexture>
@@ -365,6 +447,25 @@
       </shader>
       <textures>
         <texture UNIT="0" name="ErosionMap">
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+        </texture>
+      </textures>
+    </material>
+
+    <material name="DisplayPeaksAndValleysTexture">
+      <shader name="DisplayTexture">
+        <values>
+          <valueof uniform   = "TEXTURE"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "0"
+                   component = "UNIT"
+          />
+        </values>
+      </shader>
+      <textures>
+        <texture UNIT="0" name="PeaksAndValleysMap">
           <MIN_FILTER value="LINEAR"/>
           <MAG_FILTER value="LINEAR"/>
         </texture>

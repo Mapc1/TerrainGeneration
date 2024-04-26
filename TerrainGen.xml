@@ -8,6 +8,9 @@
       <attribute type="STATE" name="GAIN" data="FLOAT" value="0.5"/>
       <attribute type="STATE" name="LACUNARITY" data="FLOAT" value="2.0"/>
       <attribute type="STATE" name="DISPLACEMENT_STRENGTH" data="FLOAT" value="100.0"/>
+      <attribute type="STATE" name="CONTINENTAL_POWER" data="FLOAT" value="5.0"/>
+      <attribute type="STATE" name="EROSION_POWER" data="FLOAT" value="1.0"/>
+      <attribute type="STATE" name="PEAKS_AND_VALLEYS_POWER" data="FLOAT" value="1.0"/>
     </attributes>
 
     <scenes>
@@ -69,6 +72,10 @@
 
       <pass class="compute" name="GenErosion">
         <material name="GenErosion" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
+      </pass>
+
+      <pass class="compute" name="GenPeaksAndValleys">
+        <material name="GenPeaksAndValleys" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
       <pass class="compute" name="GenDisplacement">
@@ -161,8 +168,19 @@
       <var label="Lacunarity" type="STATE" context="TerrainGen::GenErosion" component="LACUNARITY" def="min=0.0001 max=3"/>
     </window>
 
+    <window label="Peaks and valleys Parameters">
+      <var label="Number of octaves" type="STATE" context="TerrainGen::GenPeaksAndValleys" component="OCTAVES" def="min=1 max=10"/>
+      <var label="Starting amplitude" type="STATE" context="TerrainGen::GenPeaksAndValleys" component="STARTING_AMPLITUDE" def="min=0.0001 max=10"/>
+      <var label="Starting frequency" type="STATE" context="TerrainGen::GenPeaksAndValleys" component="STARTING_FREQ" def="min=0.0001 max=3"/>
+      <var label="Gain" type="STATE" context="TerrainGen::GenPeaksAndValleys" component="GAIN" def="min=0.0001 max=3"/>
+      <var label="Lacunarity" type="STATE" context="TerrainGen::GenPeaksAndValleys" component="LACUNARITY" def="min=0.0001 max=3"/>
+    </window>
+
     <window label="Displacement Parameters">
       <var label="Displacement strength" type="STATE" context="TerrainGen::GenDisplacement" component="DISPLACEMENT_STRENGTH" def="min=1 max=1000"/>
+      <var label="Continental power" type="STATE" context="TerrainGen::GenDisplacement" component="CONTINENTAL_POWER" def="min=0 max=10"/>
+      <var label="Erosion power" type="STATE" context="TerrainGen::GenDisplacement" component="EROSION_POWER" def="min=0 max=10"/>
+      <var label="Peaks and valleys power" type="STATE" context="TerrainGen::GenDisplacement" component="PEAKS_AND_VALLEYS_POWER" def="min=0 max=10"/>
     </window>
 
     <window label="Other settings">
