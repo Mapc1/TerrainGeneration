@@ -37,7 +37,8 @@ void main(){
     if (Inputs.worldPos.y < -100.1 || Inputs.worldPos.y > 100.1) diff_color = vec4(1,0,0,1);
     else if (Inputs.worldPos.y <= -70.0) diff_color = vec4(0,0,0,1);
     else if (Inputs.worldPos.y < 0.0) diff_color = vec4(0,0,1,1);
-    else if (Inputs.worldPos.y >= 70.0) diff_color = vec4(1);
+    else if (Inputs.worldPos.y < 1.0) diff_color = vec4(1,1,0,1);
+    else if (Inputs.worldPos.y >= 50.0) diff_color = vec4(1);
     else diff_color = vec4(0,1,0,1);
     
     
