@@ -35,11 +35,10 @@ float getDisplacement(vec2 coords) {
   float erosion_noise = texture(EROSION_MAP, tex_coords).r;
   float peaks_and_valleys_noise = texture(PEAKS_AND_VALLEYS_MAP, tex_coords).r;
 
-  return (getContinental(continental_noise, CONTINENTAL_POWER) + getErosion(erosion_noise, EROSION_POWER) + getPeaksNValleys(peaks_and_valleys_noise, PEAKS_AND_VALLEYS_POWER)) / 3 * DISPLACEMENT_STRENGTH;
-
-//  return getPeaksNValleys(peaks_and_valleys_noise, getErosion(erosion_noise, getContinental(continental_noise,DISPLACEMENT_STRENGTH)));
-  //return getContinental(tex_coords.x * 2 -1, DISPLACEMENT_STRENGTH);
-  //return getErosion(tex_coords.x * 2 - 1, DISPLACEMENT_STRENGTH);
+  //return (getContinental(continental_noise, CONTINENTAL_POWER) + getErosion(erosion_noise, EROSION_POWER) + getPeaksNValleys(peaks_and_valleys_noise, PEAKS_AND_VALLEYS_POWER)) / 3 * DISPLACEMENT_STRENGTH; 
+  //return getPeaksNValleys(peaks_and_valleys_noise, getErosion(erosion_noise, getContinental(continental_noise,DISPLACEMENT_STRENGTH)));
+  return getContinental(continental_noise, 0.5) + getErosion(erosion_noise, 0.5) + getErosion(peaks_and_valleys_noise, 0.5);
+  //return getErosion(tex_coords.x * 2 - 1, 1);
 }
 
 vec4 calcDisplacementAndNormal(vec2 noiseCoord) {

@@ -32,23 +32,24 @@ float getContinental(float noise, float factor){
         return (m_factor * noise + b_factor) * factor;
     }
 
-    vec2[13] points = {
-        vec2(-1.1,-1),
-        vec2(-1,-1),
-        vec2(-0.6,-0.93),
-        vec2(-0.5,-0.4),
-        vec2(-0.2,-0.1),
-        vec2(-0.05,0.025),
-        vec2(0.1,0.05),
-        vec2(0.4,0.2),
-        vec2(0.55,0.4),
-        vec2(0.7,0.7),
-        vec2(0.8,0.93),  
-        vec2(1,1),
-        vec2(1.1,1)
-    }; int size = 13;
+    vec2[14] points = {
+        vec2(-1.1,0),
+        vec2(-1,0),
+        vec2(-0.7,35),
+        vec2(-0.6,60),
+        vec2(-0.5,95),
+        vec2(-0.2,95),
+        vec2(0.1,100),
+        vec2(0.35,115),
+        vec2(0.55,140),
+        vec2(0.6,145),
+        vec2(0.7,150),
+        vec2(0.8,155),  
+        vec2(1,160),
+        vec2(1.1,125)
+    }; int size = 14;
     
-    vec2[4] inBetween = getInBetween13(noise, points, size);
+    vec2[4] inBetween = getInBetween14(noise, points, size);
 
     float time = getTime(inBetween[1].x, inBetween[2].x, noise);
     vec4 cmTime = vec4(pow(time,3), pow(time,2), time, 1);
@@ -95,20 +96,20 @@ float getErosion(float noise, float factor){
     
     
     vec2[14] points = {
-        vec2(-1.1,1.175),
-        vec2(-1,1),
-        vec2(-0.8,0.65),
-        vec2(-0.5,0.5),
-        vec2(-0.35,0.575),
-        vec2(-0.1,0.3),
-        vec2(0.2,0.25),
-        vec2(0.5,0.25),
-        vec2(0.6,0.35),
-        vec2(0.75,0.35),
-        vec2(0.85,0.2),
-        vec2(0.9,0.05),  
+        vec2(-1.1,80),
+        vec2(-1,75),
+        vec2(-0.8,70),
+        vec2(-0.5,60),
+        vec2(-0.35,40),
+        vec2(-0.1,30),
+        vec2(0.2,20),
+        vec2(0.5,20),
+        vec2(0.6,35),
+        vec2(0.75,35),
+        vec2(0.85,15),
+        vec2(0.9,5),  
         vec2(1,0),
-        vec2(1.1,-0.05)
+        vec2(1.1,0)
     }; int size = 14;
     
     vec2[4] inBetween = getInBetween14(noise, points, size);
@@ -137,21 +138,21 @@ float getErosion(float noise, float factor){
 
 float getPeaksNValleys(float noise, float factor){
    vec2[13] points = {
-        vec2(-1.1,-1),
-        vec2(-1,-1),
+        vec2(-1.1,0),
+        vec2(-1,0),
 
-        vec2(-0.7,-0.8),
-        vec2(-0.5,-0.4),
-        vec2(-0.2,-0.1),
-        vec2(0,0),
-        vec2(0.2,0.1),
-        vec2(0.4,0.4),
-        vec2(0.6,0.55),
-        vec2(0.7,0.7),
-        vec2(0.9,0.95),  
+        vec2(-0.7,4),
+        vec2(-0.5,12),
+        vec2(-0.2,16),
+        vec2(0,20),
+        vec2(0.2,22),
+        vec2(0.4,28),
+        vec2(0.6,32),
+        vec2(0.7,35),
+        vec2(0.9,38),  
        
-        vec2(1,1),
-        vec2(1.1,1)
+        vec2(1,40),
+        vec2(1.1,40)
     }; int size = 13;
     
     vec2[4] inBetween = getInBetween13(noise, points, size);
