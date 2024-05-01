@@ -9,5 +9,7 @@ in Data {
 out vec4 FragColor;
 
 void main() {
-    FragColor = texture(TEXTURE, Inputs.texCoord);
+    float color = texture(TEXTURE, Inputs.texCoord).r;
+    if (color < 0 ) FragColor = vec4(abs(color), 0,0,1);
+    else FragColor = vec4(0,0,color,1);
 }

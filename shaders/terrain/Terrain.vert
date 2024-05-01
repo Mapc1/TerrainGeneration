@@ -26,6 +26,8 @@ void main (){
 
     vec4 displaced_pos = position + (normal * displacement);
 
+    // Outpus.biome = texture(BIOME_MAP, texCoord0).r;
+
     Outputs.worldPos = displaced_pos * M;
     Outputs.lightSpaceCoord = LIGHT_SPACE_MAT * Outputs.worldPos;
     Outputs.normal = normalize(NORMAL_MAT*displaced_normal);

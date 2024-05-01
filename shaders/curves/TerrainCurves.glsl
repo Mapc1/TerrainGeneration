@@ -33,20 +33,20 @@ float getContinental(float noise, float factor){
     }
 
     vec2[14] points = {
-        vec2(-1.1,0),
-        vec2(-1,0),
-        vec2(-0.7,35),
-        vec2(-0.6,60),
-        vec2(-0.5,95),
-        vec2(-0.2,95),
-        vec2(0.1,100),
+        vec2(-1.1,6),
+        vec2(-1,6),
+        vec2(-0.6,6),
+        vec2(-0.4,50),
+        vec2(-0.3,60),
+        vec2(-0.2,85),
+        vec2(0.1,95),
         vec2(0.35,115),
         vec2(0.55,140),
         vec2(0.6,145),
         vec2(0.7,150),
         vec2(0.8,155),  
         vec2(1,160),
-        vec2(1.1,125)
+        vec2(1.1,160)
     }; int size = 14;
     
     vec2[4] inBetween = getInBetween14(noise, points, size);
@@ -99,17 +99,17 @@ float getErosion(float noise, float factor){
         vec2(-1.1,80),
         vec2(-1,75),
         vec2(-0.8,70),
-        vec2(-0.5,60),
-        vec2(-0.35,40),
-        vec2(-0.1,30),
-        vec2(0.2,20),
-        vec2(0.5,20),
-        vec2(0.6,35),
-        vec2(0.75,35),
-        vec2(0.85,15),
-        vec2(0.9,5),  
-        vec2(1,0),
-        vec2(1.1,0)
+        vec2(-0.7,60),
+        vec2(-0.55,40),
+        vec2(-0.3,45),
+        vec2(-0.2,10),
+        vec2(0.15,10),
+        vec2(0.3,25),
+        vec2(0.45,25),
+        vec2(0.60,5),
+        vec2(0.9,2),  
+        vec2(1,1),
+        vec2(1.1,1)
     }; int size = 14;
     
     vec2[4] inBetween = getInBetween14(noise, points, size);
@@ -141,15 +141,15 @@ float getPeaksNValleys(float noise, float factor){
         vec2(-1.1,0),
         vec2(-1,0),
 
-        vec2(-0.7,4),
-        vec2(-0.5,12),
-        vec2(-0.2,16),
-        vec2(0,20),
-        vec2(0.2,22),
-        vec2(0.4,28),
-        vec2(0.6,32),
-        vec2(0.7,35),
-        vec2(0.9,38),  
+        vec2(-0.8,2),
+        vec2(-0.65,10),
+        vec2(-0.45,12),
+        vec2(-0.1,14),
+        vec2(0,15),
+        vec2(0.3,16),
+        vec2(0.4,38),
+        vec2(0.6,35),
+        vec2(0.9,36),  
        
         vec2(1,40),
         vec2(1.1,40)
