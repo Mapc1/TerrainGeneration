@@ -82,6 +82,14 @@
         <material name="GenDisplacement" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
+      <pass class="compute" name="GenTemperature">
+        <material name="GenDisplacement" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
+      </pass>
+
+      <pass class="compute" name="GenHumidity">
+        <material name="GenDisplacement" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
+      </pass>
+
       <pass class="depthmap" name="GenShadowMap">
         <scenes>
           <scene name="Plane"/>
@@ -174,6 +182,22 @@
       <var label="Starting frequency" type="STATE" context="TerrainGen::GenPeaksAndValleys" component="STARTING_FREQ" def="min=0.0001 max=3"/>
       <var label="Gain" type="STATE" context="TerrainGen::GenPeaksAndValleys" component="GAIN" def="min=0.0001 max=3"/>
       <var label="Lacunarity" type="STATE" context="TerrainGen::GenPeaksAndValleys" component="LACUNARITY" def="min=0.0001 max=3"/>
+    </window>
+
+    <window label="Temperature Parameters">
+      <var label="Number of octaves" type="STATE" context="TerrainGen::GenTemperature" component="OCTAVES" def="min=1 max=10"/>
+      <var label="Starting amplitude" type="STATE" context="TerrainGen::GenTemperature" component="STARTING_AMPLITUDE" def="min=0.0001 max=10"/>
+      <var label="Starting frequency" type="STATE" context="TerrainGen::GenTemperature" component="STARTING_FREQ" def="min=0.0001 max=3"/>
+      <var label="Gain" type="STATE" context="TerrainGen::GenTemperature" component="GAIN" def="min=0.0001 max=3"/>
+      <var label="Lacunarity" type="STATE" context="TerrainGen::GenTemperature" component="LACUNARITY" def="min=0.0001 max=3"/>
+    </window>
+
+    <window label="Humidity Parameters">
+      <var label="Number of octaves" type="STATE" context="TerrainGen::GenHumidity" component="OCTAVES" def="min=1 max=10"/>
+      <var label="Starting amplitude" type="STATE" context="TerrainGen::GenHumidity" component="STARTING_AMPLITUDE" def="min=0.0001 max=10"/>
+      <var label="Starting frequency" type="STATE" context="TerrainGen::GenHumidity" component="STARTING_FREQ" def="min=0.0001 max=3"/>
+      <var label="Gain" type="STATE" context="TerrainGen::GenHumidity" component="GAIN" def="min=0.0001 max=3"/>
+      <var label="Lacunarity" type="STATE" context="TerrainGen::GenHumidity" component="LACUNARITY" def="min=0.0001 max=3"/>
     </window>
 
     <window label="Displacement Parameters">

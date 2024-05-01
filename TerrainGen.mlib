@@ -30,6 +30,20 @@
       <MIPMAP value="true"/>
     </texture>
 
+    <texture name="TemperatureMap">
+      <WIDTH value="1024"/>
+      <HEIGHT value="1024"/>
+      <INTERNAL_FORMAT value="RGBA32F"/>
+      <MIPMAP value="true"/>
+    </texture>
+
+    <texture name="HumidityMap">
+      <WIDTH value="1024"/>
+      <HEIGHT value="1024"/>
+      <INTERNAL_FORMAT value="RGBA32F"/>
+      <MIPMAP value="true"/>
+    </texture>
+
     <cubeMap name="Skybox"
              filePosX="textures/skybox/px.png"
              fileNegX="textures/skybox/nx.png"
@@ -262,6 +276,100 @@
       </shader>
       <imageTextures>
         <imageTexture UNIT="0" texture="PeaksAndValleysMap">
+          <ACCESS value="WRITE_ONLY"/>
+          <LEVEL value="0"/>
+        </imageTexture>
+      </imageTextures>
+    </material>
+
+    <material name="GenTemperature">
+      <shader name="GenNoise">
+        <values>
+          <!-- Output texture -->
+          <valueof uniform   = "OUTPUT"
+                   type      = "IMAGE_TEXTURE"
+                   context   = "CURRENT"
+                   id        = "0"
+                   component = "UNIT"
+          />
+
+          <!-- Programable parameters -->
+          <valueof uniform   = "OCTAVES"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "OCTAVES"
+          />
+          <valueof uniform   = "STARTING_AMPLITUDE"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "STARTING_AMPLITUDE"
+          />
+          <valueof uniform   = "STARTING_FREQ"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "STARTING_FREQ"
+          />
+          <valueof uniform   = "GAIN"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "GAIN"
+          />
+          <valueof uniform   = "LACUNARITY"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "LACUNARITY"
+          />
+        </values>
+      </shader>
+      <imageTextures>
+        <imageTexture UNIT="0" texture="TemperatureMap">
+          <ACCESS value="WRITE_ONLY"/>
+          <LEVEL value="0"/>
+        </imageTexture>
+      </imageTextures>
+    </material>
+
+    <material name="GenHumidity">
+      <shader name="GenNoise">
+        <values>
+          <!-- Output texture -->
+          <valueof uniform   = "OUTPUT"
+                   type      = "IMAGE_TEXTURE"
+                   context   = "CURRENT"
+                   id        = "0"
+                   component = "UNIT"
+          />
+
+          <!-- Programable parameters -->
+          <valueof uniform   = "OCTAVES"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "OCTAVES"
+          />
+          <valueof uniform   = "STARTING_AMPLITUDE"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "STARTING_AMPLITUDE"
+          />
+          <valueof uniform   = "STARTING_FREQ"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "STARTING_FREQ"
+          />
+          <valueof uniform   = "GAIN"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "GAIN"
+          />
+          <valueof uniform   = "LACUNARITY"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "LACUNARITY"
+          />
+        </values>
+      </shader>
+      <imageTextures>
+        <imageTexture UNIT="0" texture="HumidityMap">
           <ACCESS value="WRITE_ONLY"/>
           <LEVEL value="0"/>
         </imageTexture>
