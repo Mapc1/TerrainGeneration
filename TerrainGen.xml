@@ -8,9 +8,9 @@
       <attribute type="STATE" name="GAIN" data="FLOAT" value="0.5"/>
       <attribute type="STATE" name="LACUNARITY" data="FLOAT" value="2.0"/>
       <attribute type="STATE" name="DISPLACEMENT_STRENGTH" data="FLOAT" value="100.0"/>
-      <attribute type="STATE" name="CONTINENTAL_POWER" data="FLOAT" value="5.0"/>
+      <attribute type="STATE" name="CONTINENTAL_POWER" data="FLOAT" value="1.0"/>
       <attribute type="STATE" name="EROSION_POWER" data="FLOAT" value="1.0"/>
-      <attribute type="STATE" name="PEAKS_AND_VALLEYS_POWER" data="FLOAT" value="1.0"/>
+      <attribute type="STATE" name="PEAKS_AND_VALLEYS_POWER" data="FLOAT" value="0.5"/>
     </attributes>
 
     <scenes>
