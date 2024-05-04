@@ -9,6 +9,13 @@
       <MIPMAP value="true"/>
     </texture>
 
+    <texture name="BiomeMap">
+      <WIDTH value="1024"/>
+      <HEIGHT value="1024"/>
+      <INTERNAL_FORMAT value="RGBA32I"/>
+      <MIPMAP value="true"/>
+    </texture>
+
     <texture name="ContinentalMap">
       <WIDTH value="1024"/>
       <HEIGHT value="1024"/>
@@ -74,6 +81,7 @@
         <file name="shaders/compute/GenDisplacement.comp"/>
         <file name="shaders/utils/PerlinNoise.glsl"/>
         <file name="shaders/curves/TerrainCurves.glsl"/>
+        <file name="shaders/biomes/Biomes.glsl"/> 
       </cs>
     </shader>
     <shader name="Skybox" vs="shaders/skybox/Skybox.vert" ps="shaders/skybox/Skybox.frag"/>
@@ -85,6 +93,7 @@
       <ps>
         <file name="shaders/terrain/Terrain.frag"/> 
         <file name="shaders/curves/TerrainCurves.glsl"/>
+        <file name="shaders/biomes/Biomes.glsl"/> 
       </ps>
     </shader>
 
@@ -397,10 +406,28 @@
                    id        = "2"
                    component = "UNIT"
           />
+          <valueof uniform   = "TEMPERATURE_MAP"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "3"
+                   component = "UNIT"
+          />
+          <valueof uniform   = "HUMIDITY_MAP"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "4"
+                   component = "UNIT"
+          />
           <valueof uniform   = "DISPLACEMENT_MAP"
                    type      = "IMAGE_TEXTURE"
                    context   = "CURRENT"
-                   id        = "3"
+                   id        = "5"
+                   component = "UNIT"
+          />
+          <valueof uniform   = "BIOME_MAP"
+                   type      = "IMAGE_TEXTURE"
+                   context   = "CURRENT"
+                   id        = "6"
                    component = "UNIT"
           />
 
@@ -448,9 +475,28 @@
           <WRAP_R value="CLAMP_TO_EDGE"/>
           <WRAP_T value="CLAMP_TO_EDGE"/>
         </texture>
+        <texture UNIT="3" name="TemperatureMap">
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+          <WRAP_S value="CLAMP_TO_EDGE"/>
+          <WRAP_R value="CLAMP_TO_EDGE"/>
+          <WRAP_T value="CLAMP_TO_EDGE"/>
+        </texture>
+        <texture UNIT="4" name="HumidityMap">
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+          <WRAP_S value="CLAMP_TO_EDGE"/>
+          <WRAP_R value="CLAMP_TO_EDGE"/>
+          <WRAP_T value="CLAMP_TO_EDGE"/>
+        </texture>
       </textures>
       <imageTextures>
-        <imageTexture UNIT="3" texture="DisplacementMap">
+        <imageTexture UNIT="5" texture="DisplacementMap">
+          <ACCESS value="WRITE_ONLY"/>
+          <LEVEL value="0"/>
+        </imageTexture>
+
+        <imageTexture UNIT="6" texture="BiomeMap">
           <ACCESS value="WRITE_ONLY"/>
           <LEVEL value="0"/>
         </imageTexture>
@@ -471,6 +517,18 @@
                    context   = "CURRENT"
                    id        = "1"
                    component = "UNIT"
+          />
+          <valueof uniform   = "BIOME_MAP"
+                   type      = "TEXTURE_BINDING"
+                   context   = "CURRENT"
+                   id        = "2"
+                   component = "UNIT"
+          />
+
+          <valueof uniform   = "WATER_LEVEL"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "WATER_LEVEL"
           />
 
           <valueof uniform   = "PVM"
@@ -514,6 +572,12 @@
           <WRAP_T value="CLAMP_TO_EDGE"/>
         </texture>
         <texture name="ShadowMap" UNIT="1">
+          <COMPARE_MODE value="COMPARE_REF_TO_TEXTURE"/>
+          <COMPARE_FUNC value="LEQUAL"/>
+          <MIN_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>
+        </texture>
+        <texture name="BiomeMap" UNIT="2">
           <COMPARE_MODE value="COMPARE_REF_TO_TEXTURE"/>
           <COMPARE_FUNC value="LEQUAL"/>
           <MIN_FILTER value="LINEAR"/>

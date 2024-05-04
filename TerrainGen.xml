@@ -11,6 +11,7 @@
       <attribute type="STATE" name="CONTINENTAL_POWER" data="FLOAT" value="1.0"/>
       <attribute type="STATE" name="EROSION_POWER" data="FLOAT" value="1.0"/>
       <attribute type="STATE" name="PEAKS_AND_VALLEYS_POWER" data="FLOAT" value="0.5"/>
+      <attribute type="STATE" name="WATER_LEVEL" data="FLOAT" value="115"/>
     </attributes>
 
     <scenes>
@@ -208,6 +209,7 @@
     </window>
 
     <window label="Other settings">
+      <var label="Water Level" type="STATE" context="TerrainGen::Terrain" component="WATER_LEVEL" def="min=0 max=200"/>
       <pipelineList label="Pipeline list"/>
     </window>
   </interface>

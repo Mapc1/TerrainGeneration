@@ -1,5 +1,3 @@
-#version 460
-
 int getBiome(float continental, float erosion, float peaks_and_valleys, float temperature, float humidity);
 vec4 getColorBiome(int biome, float water_level, float heigh);
 
@@ -14,5 +12,18 @@ int getBiome(float continental, float erosion, float peaks_and_valleys, float te
 }
 
 vec4 getColorBiome(int biome, float water_level, float heigh){
-    return vec4(1);
+    switch(biome){
+        case OCEAN:
+        if (heigh < water_level) return vec4(0,0,1,1);
+        else return vec4(0,1,0,1);
+        
+        case PLAIN:
+        return vec4(1,0,0,1);
+        
+        case FLOREST:
+        return vec4(1,0,0,1);
+        
+        case SNOW_MOUNTAIN:
+        return vec4(1,0,0,1);
+    }
 }

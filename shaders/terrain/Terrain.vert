@@ -17,6 +17,7 @@ out Data {
     vec4 lightSpaceCoord;
     vec3 normal;
     vec3 lightDir;
+    vec2 tex_coords;
 } Outputs;
 
 void main (){
@@ -26,12 +27,11 @@ void main (){
 
     vec4 displaced_pos = position + (normal * displacement);
 
-    // Outpus.biome = texture(BIOME_MAP, texCoord0).r;
-
     Outputs.worldPos = displaced_pos * M;
     Outputs.lightSpaceCoord = LIGHT_SPACE_MAT * Outputs.worldPos;
     Outputs.normal = normalize(NORMAL_MAT*displaced_normal);
     Outputs.lightDir = normalize(vec3(V * -LIGHT_DIR));
+    Outputs.tex_coords = texCoord0;
 
     gl_Position = PVM * displaced_pos;
 }
