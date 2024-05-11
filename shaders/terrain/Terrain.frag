@@ -4,7 +4,7 @@ vec4 getColorBiome(int biome, float water_level, float heigh);
 
 uniform sampler2DShadow SHADOW_MAP;
 
-uniform isampler2D BIOME_MAP;
+uniform sampler2D BIOME_MAP;
 
 uniform float WATER_LEVEL = 115;
 
@@ -47,8 +47,10 @@ void main(){
     else if (Inputs.worldPos.y <= 115) diff_color = vec4(0,0,1,1);
     else diff_color = vec4(0,1,0,1);
     */
-
-    int biome = texture(BIOME_MAP, Inputs.tex_coords).r;
+    //int biome = int(texture(BIOME_MAP, Inputs.tex_coords).r);
+    
+    int biome = int(texelFetch(BIOME_MAP, ivec2(Inputs.tex_coords * textureSize(BIOME_MAP, 0)), 0).r);
+    
     vec4 diff_color = getColorBiome(biome, WATER_LEVEL, Inputs.worldPos.y);    
 
     vec4 world_pos = Inputs.worldPos;
@@ -60,4 +62,4 @@ void main(){
     color = 0.25 * diff_color;
     color += luminance * diff_color;
     
-}
+}   

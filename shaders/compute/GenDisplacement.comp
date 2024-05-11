@@ -86,6 +86,6 @@ void main() {
     int biome = getBiome(write_location);
 
     imageStore(DISPLACEMENT_MAP, write_location, vec4(normal,height));
-    imageStore(BIOME_MAP, write_location, ivec4(biome));
+    imageStore(BIOME_MAP, write_location,  vec4(biome));
 
 }
