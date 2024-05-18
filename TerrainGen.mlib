@@ -12,7 +12,7 @@
     <texture name="BiomeMap">
       <WIDTH value="1024"/>
       <HEIGHT value="1024"/>
-      <INTERNAL_FORMAT value="RGBA32I"/>
+      <INTERNAL_FORMAT value="RGBA32F"/>
       <MIPMAP value="true"/>
     </texture>
 
@@ -578,10 +578,11 @@
           <MAG_FILTER value="LINEAR"/>
         </texture>
         <texture name="BiomeMap" UNIT="2">
-          <COMPARE_MODE value="COMPARE_REF_TO_TEXTURE"/>
-          <COMPARE_FUNC value="LEQUAL"/>
           <MIN_FILTER value="LINEAR"/>
-          <MAG_FILTER value="LINEAR"/>
+          <MAG_FILTER value="LINEAR"/>    
+          <WRAP_S value="CLAMP_TO_EDGE"/>
+          <WRAP_R value="CLAMP_TO_EDGE"/>
+          <WRAP_T value="CLAMP_TO_EDGE"/>
         </texture>
       </textures>
     </material>
