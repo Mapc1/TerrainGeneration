@@ -20,16 +20,16 @@ uniform float CONTINENTAL_POWER = 1.0;
 uniform float EROSION_POWER = 1.0;
 uniform float PEAKS_AND_VALLEYS_POWER = 0.5;
 
+uniform float WATER_LEVEL = 115;
 
 const vec2 NOISE_PERIOD = vec2(100.0,100.0);
-
 
 float cnoise(vec2 P);
 float pnoise(vec2 P, vec2 rep);
 float getContinental(float noise, float factor);
 float getErosion(float noise, float factor);
 float getPeaksNValleys(float noise, float factor);
-int getBiome(float continental, float erosion, float peaks_and_valleys, float temperature, float humidity);
+int getBiome(float continental, float erosion, float peaks_and_valleys, float temperature, float humidity, float water_level, float height);
 
 
 float getDisplacement(vec2 coords) {
@@ -42,7 +42,7 @@ float getDisplacement(vec2 coords) {
   return getContinental(continental_noise, CONTINENTAL_POWER) + getErosion(erosion_noise, EROSION_POWER) + getPeaksNValleys(peaks_and_valleys_noise, PEAKS_AND_VALLEYS_POWER);
 }
 
-int getBiome(vec2 coords) {
+int getBiome(vec2 coords, float height) {
   vec2 tex_coords = coords / textureSize(CONTINENTAL_MAP, 0);
 
   float continental_noise = texture(CONTINENTAL_MAP, tex_coords).r;
@@ -51,7 +51,7 @@ int getBiome(vec2 coords) {
   float temperature_noise = texture(TEMPERATURE_MAP, tex_coords).r;
   float humidity_noise = texture(HUMIDITY_MAP, tex_coords).r;
 
-  return getBiome(continental_noise, erosion_noise, peaks_and_valleys_noise, temperature_noise, humidity_noise);
+  return getBiome(continental_noise, erosion_noise, peaks_and_valleys_noise, temperature_noise, humidity_noise, WATER_LEVEL, height);
 }
 
 
@@ -83,7 +83,7 @@ void main() {
     vec4 displacement_and_normal = calcDisplacementAndNormal(write_location);
     vec3 normal = displacement_and_normal.xyz;
     float height = displacement_and_normal.w;
-    int biome = getBiome(write_location);
+    int biome = getBiome(write_location, height);
 
     imageStore(DISPLACEMENT_MAP, write_location, vec4(normal,height));
     imageStore(BIOME_MAP, write_location,  vec4(biome));

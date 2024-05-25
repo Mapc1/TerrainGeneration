@@ -79,15 +79,15 @@
         <material name="GenPeaksAndValleys" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
-      <pass class="compute" name="GenDisplacement">
-        <material name="GenDisplacement" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
-      </pass>
-
       <pass class="compute" name="GenTemperature">
-        <material name="GenDisplacement" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
+        <material name="GenTemperature" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
       <pass class="compute" name="GenHumidity">
+        <material name="GenHumidity" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
+      </pass>
+
+      <pass class="compute" name="GenDisplacement">
         <material name="GenDisplacement" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
@@ -209,7 +209,7 @@
     </window>
 
     <window label="Other settings">
-      <var label="Water Level" type="STATE" context="TerrainGen::Terrain" component="WATER_LEVEL" def="min=0 max=200"/>
+      <var label="Water Level" type="STATE" context="TerrainGen::GenDisplacement" component="WATER_LEVEL" def="min=0 max=200"/>
       <pipelineList label="Pipeline list"/>
     </window>
   </interface>

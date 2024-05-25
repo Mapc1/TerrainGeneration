@@ -431,6 +431,12 @@
                    component = "UNIT"
           />
 
+          <valueof uniform   = "WATER_LEVEL"
+                   type      = "STATE"
+                   context   = "CURRENT"
+                   component = "WATER_LEVEL"
+          />
+
           <valueof uniform   = "DISPLACEMENT_STRENGTH"
                    type      = "STATE"
                    context   = "CURRENT"
