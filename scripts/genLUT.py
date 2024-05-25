@@ -1,12 +1,115 @@
 import os
+T_PEAKS = [-1, -0.6, 0.4, 1]; 
+T_CONTINENTAL = [-1, 0, 0.5, 1]; 
+T_EROSION = [-1, -0.6, 0.4, 1]; 
+T_TEMPERATURE = [-1, -0.5, 0.5, 1]; 
+T_HUMIDITY = [-1, -0.5, 0.5, 1]; 
 
 # Nome: (ID, Peaks, Continental, Erosion, Humidity, Temperature)
 biomes = {
-    'Forest': (0, 0, 0, 0, 0, 0.5),
-    'Desert': (1, 0, 0, 0, 0, 1.0),
-    'Snow Mountains': (2, 0, 0, 1, 0, 0.0)
+    'Peaks' : (5, T_PEAKS[1], T_CONTINENTAL[1], -1, -1, T_TEMPERATURE[0]),
+    'Snow_M' : (3, T_PEAKS[1], T_CONTINENTAL[1],  -1, -1, -1),
+
+    'Plain' : (1, -1, -1, T_EROSION[0], -1, T_TEMPERATURE[0]),
+    'Desert' : (4, -1, T_CONTINENTAL[0], T_EROSION[0], -1, T_TEMPERATURE[1]),
+    'Florest' : (2, -1, T_CONTINENTAL[0], T_EROSION[0], T_HUMIDITY[0], T_TEMPERATURE[0]),
+    'Snow_P' : (7, -1, T_CONTINENTAL[0], T_EROSION[0], -1, -1),
+    'Jungle' : (9, -1, T_CONTINENTAL[0], T_EROSION[0], T_HUMIDITY[0], T_TEMPERATURE[1]),
+
+    'Plateau' : (6, -1, T_CONTINENTAL[0], T_EROSION[1], -1, -1)
 }
 
+biomes = [
+    {
+        'KeyWord' : 'PEAKS',
+        'ThresHolds' : [
+            #Primeiro
+            {(T_PEAKS[2],T_PEAKS[3]),(1,1),(1,1),(1,1),(1,1)},
+            #Segundo
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+        ]
+    },
+    {
+        'KeyWord' : 'SNOW_MOUNTAIN',
+        'ThresHolds' : [
+            #Primeiro
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+            #Segundo
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+        ]
+    },
+    {
+        'KeyWord' : 'FOREST',
+        'ThresHolds' : [
+            #Primeiro
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+            #Segundo
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+        ]
+    },
+    {
+        'KeyWord' : 'JUNGLE',
+        'ThresHolds' : [
+            #Primeiro
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+            #Segundo
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+        ]
+    },
+    {
+        'KeyWord' : 'DESERT',
+        'ThresHolds' : [
+            #Primeiro
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+            #Segundo
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+        ]
+    },
+    {
+        'KeyWord' : 'SNOW_PLAINS',
+        'ThresHolds' : [
+            #Primeiro
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+            #Segundo
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+        ]
+    },
+    {
+        'KeyWord' : 'PLAIN',
+        'ThresHolds' : [
+            #Primeiro
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+            #Segundo
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+        ]
+    },
+    {
+        'KeyWord' : 'PLATEAU',
+        'ThresHolds' : [
+            #Primeiro
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+            #Segundo
+            {(1,1),(1,1),(1,1),(1,1),(1,1)},
+        ]
+    }
+]
+
+#const int OCEAN = 0,
+#        PLAIN = 1,
+#        FOREST = 2,
+#
+#        DESERT = 4,
+#        PLATEAU = 6, //More optional than the others
+#        SNOW_PLAINS = 7, //More optional than the others
+#        FROZEN_OCEAN = 8,
+#        JUNGLE = 9,
+#        DEBUG = 10;
+
+
+
+{{{{{
+    
+}}}}}
 peaksIndices = []
 continentalIndices = []
 erosionIndices = []
