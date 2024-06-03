@@ -46,8 +46,8 @@
     <cameras>
       <camera name="MainCamera">
         <viewport name="MainViewport"/>
-        <POSITION x="0.402" y="0.974" z="1.341" />
-        <LOOK_AT_POINT x="0" y="0" z="0" />
+        <POSITION x="-794" y="496" z="131" />
+        <VIEW x="0.841" y="-0.52" z="-0.11"/>
         <NEAR value="0.01" />
         <FAR value="5000"/>
       </camera>
