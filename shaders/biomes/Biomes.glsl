@@ -14,24 +14,28 @@ const int OCEAN = 0,
         JUNGLE = 9,
         DEBUG = 10;
 
-const float THRESHOLD_PEAKS[3] = {-0.6, 0.4, 1}; // 1
-const float THRESHOLD_CONTINENTAL[3] = {0, 0.5, 1}; // 2
-const float THRESHOLD_EROSION[3] = {-0.6, 0.4, 1}; // 3
-const float THRESHOLD_TEMPERATURE[3] = {-0.5, 0.5, 1}; // 4
-const float THRESHOLD_HUMIDITY[3] = {-0.5, 0.5, 1}; // 5
+//const float THRESHOLD_PEAKS[3] = {-0.6, 0.4, 1}; // 1
+//const float THRESHOLD_CONTINENTAL[3] = {0, 0.5, 1}; // 2
+//const float THRESHOLD_EROSION[3] = {-0.6, 0.4, 1}; // 3
+//const float THRESHOLD_TEMPERATURE[3] = {-0.5, 0.5, 1}; // 4
+//const float THRESHOLD_HUMIDITY[3] = {-0.5, 0.5, 1}; // 5
 
 const int BIOME_LUT_MAX = 8,
           BIOME_LUT_SQUARE_MAX = 2;
 
 int biomes_lookup[BIOME_LUT_MAX] = {
-    PLAIN,
-    FOREST,
-    SNOW_MOUNTAIN,
-    DESERT,
     PEAKS,
+    SNOW_MOUNTAIN,
+
+    FOREST,
+
+    DESERT,
+
     PLATEAU, //More optional than the others
     SNOW_PLAINS, //More optional than the others
-    JUNGLE
+    JUNGLE,
+    
+    PLAIN
 };
 
 const float biomes_limits[BIOME_LUT_MAX][BIOME_LUT_SQUARE_MAX][10] = {
@@ -52,19 +56,16 @@ const float biomes_limits[BIOME_LUT_MAX][BIOME_LUT_SQUARE_MAX][10] = {
     */
     
     {
-        {-1,1, -1,1, -1,1, -1,1, 0,1}, {-2,0, 0,0, 0,0, 0,0, 0,0} // PLAIN 
+        {0.3,1, 0,1, -1,1, -1,1, -0.5,1}, {-2,0, 0,0, 0,0, 0,0, 0,0} // PEAKS
+    },
+    {
+        {0.3,1, 0,1, -1,1, -1,1, -1,-0.5}, {-2,0, 0,0, 0,0, 0,0, 0,0} // SNOW_MOUNTAIN
     },
     {
         {-2,0, 0,0, 0,0, 0,0, 0,0}, {-2,0, 0,0, 0,0, 0,0, 0,0} // FOREST
     },
     {
-        {-2,0, 0,0, 0,0, 0,0, 0,0}, {-2,0, 0,0, 0,0, 0,0, 0,0} // SNOW_MOUNTAIN
-    },
-    {
-        {-2,0, 0,0, 0,0, 0,0, 0,0}, {-1,1, -1,1, -1,1, -1,1, -1,0} // DESERT
-    },
-    {
-        {-2,0, 0,0, 0,0, 0,0, 0,0}, {-2,0, 0,0, 0,0, 0,0, 0,0} // PEAKS
+        {-2,0, 0,0, 0,0, 0,0, 0,0}, {-2,0, 0,0, 0,0, 0,0, 0,0}// DESERT
     },
     {
         {-2,0, 0,0, 0,0, 0,0, 0,0}, {-2,0, 0,0, 0,0, 0,0, 0,0} // PLATEAU
@@ -74,7 +75,10 @@ const float biomes_limits[BIOME_LUT_MAX][BIOME_LUT_SQUARE_MAX][10] = {
     },
     {
         {-2,0, 0,0, 0,0, 0,0, 0,0}, {-2,0, 0,0, 0,0, 0,0, 0,0} // JUNGLE
-    } 
+    },
+    {
+        {-1,1, -1,1, -1,1, -1,1, -1,1},  {-2,1, -1,1, -1,1, -1,1, -1,1} // PLAIN 
+    },
 };
 
 // Problema -> gerar terreno natural
@@ -90,7 +94,7 @@ int getBiome(float continental, float erosion, float peaks_and_valleys, float te
         if (temperature >= -0.5) return OCEAN;
         else return FROZEN_OCEAN;
     }
-    
+
     for(int biome_lu = 0; biome_lu < BIOME_LUT_MAX; biome_lu++){
         for(int table = 0; table < BIOME_LUT_SQUARE_MAX; table++){
             if (biomes_limits[biome_lu][table][0] != -2){

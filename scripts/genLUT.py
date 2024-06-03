@@ -105,11 +105,6 @@ biomes = [
 #        JUNGLE = 9,
 #        DEBUG = 10;
 
-
-
-{{{{{
-    
-}}}}}
 peaksIndices = []
 continentalIndices = []
 erosionIndices = []
