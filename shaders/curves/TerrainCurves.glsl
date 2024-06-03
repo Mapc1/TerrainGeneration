@@ -101,7 +101,7 @@ float getErosion(float noise, float factor){
         vec2(-0.8,70),
         vec2(-0.7,60),
         vec2(-0.55,40),
-        vec2(-0.3,45),
+        vec2(-0.25,45),
         vec2(-0.2,10),
         vec2(0.15,10),
         vec2(0.3,14),
