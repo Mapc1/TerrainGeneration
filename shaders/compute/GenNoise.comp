@@ -9,6 +9,8 @@ uniform float STARTING_FREQ = 1.0;
 uniform float GAIN = 0.5;
 uniform float LACUNARITY = 2;
 
+uniform vec4 CAM_POS;
+
 uniform writeonly image2D OUTPUT;
 
 float octaveNoise(
@@ -22,7 +24,10 @@ float octaveNoise(
 
 void main() {
     ivec2 write_location = ivec2(gl_GlobalInvocationID.xy);
-    float noise = octaveNoise(vec2(write_location), OCTAVES, STARTING_AMPLITUDE, STARTING_FREQ, GAIN, LACUNARITY);
+
+    vec2 pos = vec2(write_location) + vec2(CAM_POS.x, -CAM_POS.z);
+
+    float noise = octaveNoise(pos, OCTAVES, STARTING_AMPLITUDE, STARTING_FREQ, GAIN, LACUNARITY);
 
     imageStore(OUTPUT, write_location, vec4(noise,noise,noise,1.0));
 }

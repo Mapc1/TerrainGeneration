@@ -153,6 +153,11 @@
     <material name="GenContinental">
       <shader name="GenNoise">
         <values>
+          <valueof uniform   = "CAM_POS"
+                   type      = "CAMERA"
+                   context   = "MainCamera"
+                   component = "POSITION"
+          />
           <!-- Output texture -->
           <valueof uniform   = "OUTPUT"
                    type      = "IMAGE_TEXTURE"
@@ -200,6 +205,11 @@
     <material name="GenErosion">
       <shader name="GenNoise">
         <values>
+          <valueof uniform   = "CAM_POS"
+                   type      = "CAMERA"
+                   context   = "MainCamera"
+                   component = "POSITION"
+          />
           <!-- Output texture -->
           <valueof uniform   = "OUTPUT"
                    type      = "IMAGE_TEXTURE"
@@ -247,6 +257,11 @@
     <material name="GenPeaksAndValleys">
       <shader name="GenNoise">
         <values>
+          <valueof uniform   = "CAM_POS"
+                   type      = "CAMERA"
+                   context   = "MainCamera"
+                   component = "POSITION"
+          />
           <!-- Output texture -->
           <valueof uniform   = "OUTPUT"
                    type      = "IMAGE_TEXTURE"
@@ -294,6 +309,11 @@
     <material name="GenTemperature">
       <shader name="GenNoise">
         <values>
+          <valueof uniform   = "CAM_POS"
+                   type      = "CAMERA"
+                   context   = "MainCamera"
+                   component = "POSITION"
+          />
           <!-- Output texture -->
           <valueof uniform   = "OUTPUT"
                    type      = "IMAGE_TEXTURE"
@@ -341,6 +361,11 @@
     <material name="GenHumidity">
       <shader name="GenNoise">
         <values>
+          <valueof uniform   = "CAM_POS"
+                   type      = "CAMERA"
+                   context   = "MainCamera"
+                   component = "POSITION"
+          />
           <!-- Output texture -->
           <valueof uniform   = "OUTPUT"
                    type      = "IMAGE_TEXTURE"
@@ -551,6 +576,11 @@
                    type      = "RENDERER"
                    context   = "CURRENT"
                    component = "VIEW"
+          />
+          <valueof uniform   = "CAM_POS"
+                   type      = "CAMERA"
+                   context   = "MainCamera"
+                   component = "POSITION"
           />
           <valueof uniform   = "NORMAL_MAT"
                    type      = "RENDERER"
