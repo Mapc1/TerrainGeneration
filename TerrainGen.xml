@@ -31,7 +31,7 @@
     <scenes>
       <scene name="Skybox">
         <geometry name="Skybox" type="BOX" material="Skybox">
-          <SCALE x="1000" y="1000" z="1000"/>
+          <SCALE x="2500" y="2500" z="2500"/>
         </geometry>
       </scene>
 
