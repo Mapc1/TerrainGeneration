@@ -10,6 +10,7 @@ uniform float GAIN = 0.5;
 uniform float LACUNARITY = 2;
 
 uniform vec4 CAM_POS;
+uniform int TRAVERSE;
 
 uniform writeonly image2D OUTPUT;
 
@@ -25,7 +26,9 @@ float octaveNoise(
 void main() {
     ivec2 write_location = ivec2(gl_GlobalInvocationID.xy);
 
-    vec2 pos = vec2(write_location) + vec2(CAM_POS.x, -CAM_POS.z);
+    vec2 pos = vec2(write_location);
+    if (TRAVERSE == 1)
+        pos += vec2(CAM_POS.x, -CAM_POS.z) * 2;
 
     float noise = octaveNoise(pos, OCTAVES, STARTING_AMPLITUDE, STARTING_FREQ, GAIN, LACUNARITY);
 

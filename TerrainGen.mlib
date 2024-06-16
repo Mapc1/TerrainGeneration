@@ -158,6 +158,11 @@
                    context   = "MainCamera"
                    component = "POSITION"
           />
+          <valueof uniform   = "TRAVERSE"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "TRAVERSE"
+          />
           <!-- Output texture -->
           <valueof uniform   = "OUTPUT"
                    type      = "IMAGE_TEXTURE"
@@ -209,6 +214,11 @@
                    type      = "CAMERA"
                    context   = "MainCamera"
                    component = "POSITION"
+          />
+          <valueof uniform   = "TRAVERSE"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "TRAVERSE"
           />
           <!-- Output texture -->
           <valueof uniform   = "OUTPUT"
@@ -262,6 +272,11 @@
                    context   = "MainCamera"
                    component = "POSITION"
           />
+          <valueof uniform   = "TRAVERSE"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "TRAVERSE"
+          />
           <!-- Output texture -->
           <valueof uniform   = "OUTPUT"
                    type      = "IMAGE_TEXTURE"
@@ -314,6 +329,11 @@
                    context   = "MainCamera"
                    component = "POSITION"
           />
+          <valueof uniform   = "TRAVERSE"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "TRAVERSE"
+          />
           <!-- Output texture -->
           <valueof uniform   = "OUTPUT"
                    type      = "IMAGE_TEXTURE"
@@ -365,6 +385,11 @@
                    type      = "CAMERA"
                    context   = "MainCamera"
                    component = "POSITION"
+          />
+          <valueof uniform   = "TRAVERSE"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "TRAVERSE"
           />
           <!-- Output texture -->
           <valueof uniform   = "OUTPUT"
@@ -562,6 +587,11 @@
                    component = "WATER_LEVEL"
           />
 
+          <valueof uniform   = "TRAVERSE"
+                   type      = "RENDERER"
+                   context   = "CURRENT"
+                   component = "TRAVERSE"
+          />
           <valueof uniform   = "PVM"
                    type      = "RENDERER"
                    context   = "CURRENT"

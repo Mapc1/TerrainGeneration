@@ -147,12 +147,12 @@ float getPeaksNValleys(float noise, float factor){
         vec2(-0.1,14),
         vec2(0,15),
         vec2(0.3,16),
-        vec2(0.4,38),
-        vec2(0.6,35),
-        vec2(0.9,36),  
+        vec2(0.55,70),
+        vec2(0.7,75),
+        vec2(0.8,80),  
        
-        vec2(1,40),
-        vec2(1.1,40)
+        vec2(1,85),
+        vec2(1.1,85)
     }; int size = 13;
     
     vec2[4] inBetween = getInBetween13(noise, points, size);

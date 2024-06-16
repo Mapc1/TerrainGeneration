@@ -2,6 +2,9 @@
 <project name="Terrain Generation VTR 24" width="1280" height="720">
   <assets>
     <attributes>
+      <attribute type="RENDERER" name="TRAVERSE" data="INT" value="0"/>
+      <attribute type="RENDERER" name="PREV_TRAVERSE" data="INT" value="0"/>
+
       <attribute type="STATE" name="OCTAVES" data="INT" value="1"/>
       <attribute type="STATE" name="STARTING_AMPLITUDE" data="FLOAT" value="1.0"/>
       <attribute type="STATE" name="STARTING_FREQ" data="FLOAT" value="0.01"/>
@@ -12,6 +15,17 @@
       <attribute type="STATE" name="EROSION_POWER" data="FLOAT" value="1.0"/>
       <attribute type="STATE" name="PEAKS_AND_VALLEYS_POWER" data="FLOAT" value="0.5"/>
       <attribute type="STATE" name="WATER_LEVEL" data="FLOAT" value="115"/>
+
+      <attribute type="STATE" name="PREV_OCTAVES" data="INT" value="0"/>
+      <attribute type="STATE" name="PREV_STARTING_AMPLITUDE" data="FLOAT" value="0"/>
+      <attribute type="STATE" name="PREV_STARTING_FREQ" data="FLOAT" value="0"/>
+      <attribute type="STATE" name="PREV_GAIN" data="FLOAT" value="0"/>
+      <attribute type="STATE" name="PREV_LACUNARITY" data="FLOAT" value="0"/>
+      <attribute type="STATE" name="PREV_DISPLACEMENT_STRENGTH" data="FLOAT" value="0"/>
+      <attribute type="STATE" name="PREV_CONTINENTAL_POWER" data="FLOAT" value="0"/>
+      <attribute type="STATE" name="PREV_EROSION_POWER" data="FLOAT" value="0"/>
+      <attribute type="STATE" name="PREV_PEAKS_AND_VALLEYS_POWER" data="FLOAT" value="0"/>
+      <attribute type="STATE" name="PREV_WATER_LEVEL" data="FLOAT" value="0"/>
     </attributes>
 
     <scenes>
@@ -68,26 +82,31 @@
   <pipelines default="TerrainGen">
     <pipeline name="TerrainGen" defaultCamera="MainCamera">
       <pass class="compute" name="GenContinental">
+        <testScript file="./scripts/test.lua" script="test"/>
         <material name="GenContinental" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
       <pass class="compute" name="GenErosion">
+        <testScript file="./scripts/test.lua" script="test"/>
         <material name="GenErosion" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
       <pass class="compute" name="GenPeaksAndValleys">
+        <testScript file="./scripts/test.lua" script="test"/>
         <material name="GenPeaksAndValleys" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
       <pass class="compute" name="GenTemperature">
+        <testScript file="./scripts/test.lua" script="test"/>
         <material name="GenTemperature" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
       <pass class="compute" name="GenHumidity">
+        <testScript file="./scripts/test.lua" script="test"/>
         <material name="GenHumidity" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
-
       <pass class="compute" name="GenDisplacement">
+        <testScript file="./scripts/test.lua" script="test"/>
         <material name="GenDisplacement" fromLibrary="TerrainGen" dimX="1024" dimY="1024" dimZ="1"/>
       </pass>
 
@@ -111,6 +130,7 @@
       </pass>
 
       <pass name="Render">
+        <preScript file="./scripts/setPrevs.lua" script="prevs"/>
         <scenes>
           <scene name="Plane"/>
           <scene name="Skybox"/>
@@ -209,6 +229,7 @@
     </window>
 
     <window label="Other settings">
+      <var label="Traverse world" type="RENDERER" context="CURRENT" component="TRAVERSE" strings="False,True"/>
       <var label="Water Level" type="STATE" context="TerrainGen::GenDisplacement" component="WATER_LEVEL" def="min=0 max=200"/>
       <pipelineList label="Pipeline list"/>
     </window>

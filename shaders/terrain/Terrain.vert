@@ -3,6 +3,7 @@
 uniform mat4 PVM, M, V;
 
 uniform vec4 CAM_POS;
+uniform int TRAVERSE;
 
 uniform mat4 LIGHT_SPACE_MAT;
 uniform vec4 LIGHT_DIR;
@@ -35,5 +36,9 @@ void main (){
     Outputs.lightDir = normalize(vec3(V * -LIGHT_DIR));
     Outputs.tex_coords = texCoord0;
 
-    gl_Position = PVM * (displaced_pos+vec4(CAM_POS.x,0.0,CAM_POS.z,0.0));
+    if (TRAVERSE == 1) {
+        displaced_pos += vec4(CAM_POS.x, 0.0, CAM_POS.z, 0.0);
+    }
+
+    gl_Position = PVM * displaced_pos;
 }
